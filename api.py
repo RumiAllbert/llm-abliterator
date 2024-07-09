@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 # Initialize the FastAPI app
 app = FastAPI()
 
+
 # Define the request body
 class GenerateRequest(BaseModel):
     prompt: str
@@ -21,8 +22,11 @@ class GenerateRequest(BaseModel):
     modifier: float = 1.3
     max_tokens: int = 100
 
+
 # Load the model and tokenizer
 logger.info("Loading the model and tokenizer")
+LLAMA3_CHAT_TEMPLATE = """<|start_header_id|>user<|end_header_id|>\n{instruction}<|eot_id|><|start_header_id|>assistant<|end_header_id|>"""
+
 model = ModelAbliterator(
     "meta-llama/Meta-Llama-3-8B-Instruct",
     [
@@ -31,23 +35,45 @@ model = ModelAbliterator(
     ],
     local_files_only=True,
     activation_layers=["resid_pre"],
+    chat_template=LLAMA3_CHAT_TEMPLATE,
 )
 model.blacklist_layer([0, 1, 2, 3, 29, 30, 31])
 logger.info("Model and tokenizer loaded successfully")
 
+
 def convert_to_bfloat16_tensor(feature_directions: List[float]) -> torch.Tensor:
     try:
         feature_directions_np = np.array(feature_directions, dtype=np.float32)
-        feature_directions_tensor = torch.tensor(feature_directions_np, dtype=torch.bfloat16)
+        feature_directions_tensor = torch.tensor(
+            feature_directions_np, dtype=torch.bfloat16
+        )
         return feature_directions_tensor
     except Exception as e:
-        logger.error("Error converting feature directions to bfloat16 tensor: %s", str(e))
+        logger.error(
+            "Error converting feature directions to bfloat16 tensor: %s", str(e)
+        )
         raise
 
+
 def truncate_response(text: str) -> str:
-    if '.system' in text:
-        return text.split('.system')[0]
+    """
+    Truncates the response at various potential system/user/assistant markers,
+    handling variations with spaces and capitalization.
+    """
+    for marker in [
+        ".system",
+        ". system",
+        ".assistant",
+        ". assistant",
+        "system:",
+        "assistant:",
+        "user:",
+        "user",
+    ]:
+        if marker in text:
+            return text.split(marker, 1)[0].strip()
     return text
+
 
 @app.post("/generate")
 async def get_generation(request: GenerateRequest):
@@ -63,28 +89,30 @@ async def get_generation(request: GenerateRequest):
         clear_mem()
 
         with model:
-            logger.info("Applying refusal directions with modifier: %f", request.modifier)
+            logger.info(
+                "Applying refusal directions with modifier: %f", request.modifier
+            )
             model.apply_refusal_dirs([feature_directions * request.modifier])
 
             # Generate a response using the modified model
             logger.info("Generating response")
+
             response = model.generate(
                 prompt,
                 max_tokens_generated=request.max_tokens,
                 stop_at_eos=True,
-                top_p=0.9,
-                temperature=0.7
+                top_p=0.95,
+                temperature=0.9,
             )
 
-            # Truncate the generated text if '.system' is found
-            clean_response = truncate_response(response[0])
-
+            response = response.strip()
             logger.info("Response generated and cleaned successfully")
 
-            return {"response": clean_response}
+            return response
     except Exception as e:
         logger.error("Error during generation: %s", str(e))
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get("/health")
 async def health_check():
@@ -98,8 +126,9 @@ async def health_check():
         "status": "Service is up and running",
         "pytorch_version": pytorch_version,
         "cuda_available": cuda_available,
-        "gpu_name": gpu_name
+        "gpu_name": gpu_name,
     }
+
 
 if __name__ == "__main__":
     import uvicorn
