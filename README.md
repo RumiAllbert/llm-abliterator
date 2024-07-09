@@ -263,3 +263,89 @@ Alternatively, save the model locally.
 ```python
 hf_model.save_pretrained("your model name")
 ```
+
+# ----------------------------
+
+# FastAPI Model Generation Service
+
+There is also a FastAPI service to generate text based on a given prompt and feature directions. It also provides a health check endpoint. This is useful if you have saved your feature directions and want to generate text on the fly.
+
+## Endpoints
+
+### Health Check
+
+**URL**: `/health`
+
+**Method**: GET
+
+**Description**: Check the health of the service.
+
+**Response**:
+```json
+{
+  "status": "Service is up and running",
+  "pytorch_version": "<PyTorch version>",
+  "cuda_available": "<True/False>",
+  "gpu_name": "<GPU Name if available>"
+}
+```
+
+### Generate Text
+
+**URL**: `/generate`
+
+**Method**: POST
+
+**Description**: Generate text based on the provided prompt and feature directions.
+
+**Request Body**:
+```json
+{
+  "prompt": "Your prompt text",
+  "feature_directions": [0.1, 0.2, 0.3, ...],  // List of floats
+  "modifier": 1.3,  // Optional, default is 1.3
+  "max_tokens": 100  // Optional, default is 100
+}
+```
+
+**Response**:
+```json
+{
+  "response": "Generated text"
+}
+```
+
+## Running the Service
+
+To run the FastAPI service, execute the following command:
+
+```bash
+uvicorn <your_script_name>:app --host 0.0.0.0 --port 8888
+```
+
+Replace `<your_script_name>` with the name of your Python script containing the FastAPI app. I use `api.py` in this case.
+
+## Example Usage
+
+### Health Check
+
+To check the health of the service, make a GET request to the `/health` endpoint:
+
+```bash
+curl -X GET "http://0.0.0.0:8888/health"
+```
+
+### Generate Text
+
+To generate text, make a POST request to the `/generate` endpoint with the appropriate JSON payload:
+
+```bash
+curl -X POST "http://0.0.0.0:8888/generate" -H "Content-Type: application/json" -d '{
+  "prompt": "Tell me a story about AI",
+  "feature_directions": [0.5, -0.2, 0.1],
+  "modifier": 1.3,
+  "max_tokens": 150
+}'
+```
+
+This will return a JSON response with the generated text.
