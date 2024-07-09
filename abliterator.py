@@ -231,6 +231,7 @@ class ModelAbliterator:
             model,
             n_devices=self.n_devices,
             device=device,
+            local_files_only=local_files_only,
             dtype=torch.bfloat16,
             default_padding_side="left",
         )
@@ -375,23 +376,6 @@ class ModelAbliterator:
             include_overall_mean=include_overall_mean,
         )
 
-    def test_single_prompt(
-        self, prompt: str, max_tokens_generated: int = 64, **kwargs
-    ) -> str:
-        # Tokenize the single prompt
-        toks = self.tokenize_instructions_fn([prompt])
-
-        # Run the model with cache
-        logits, cache = self.run_with_cache(
-            toks, max_new_tokens=max_tokens_generated, drop_refusals=False, **kwargs
-        )
-
-        # Decode the generated tokens
-        generated_text = self.model.tokenizer.batch_decode(
-            toks, skip_special_tokens=True
-        )
-        return generated_text[0] if generated_text else ""
-
     def refusal_dirs(self, invert: bool = False) -> Dict[str, Float[Tensor, "d_model"]]:
         if not self.trait:
             raise IndexError("No cache")
@@ -496,9 +480,11 @@ class ModelAbliterator:
         self,
         toks: Int[Tensor, "batch_size seq_len"],
         *args,
-        drop_refusals: bool = True,
+        drop_refusals: bool = False,
         stop_at_eos: bool = False,
         max_tokens_generated: int = 1,
+        temperature: float = 0.7,
+        top_p: float = 0.9,
         **kwargs,
     ) -> Tuple[
         Float[Tensor, "batch_size seq_len d_vocab"], Int[Tensor, "batch_size seq_len"]
@@ -514,7 +500,27 @@ class ModelAbliterator:
             logits = self.model(
                 all_toks[generating, : -max_tokens_generated + i], *args, **kwargs
             )
-            next_tokens = logits[:, -1, :].argmax(dim=-1).to("cpu")
+
+            # Apply temperature
+            logits = logits[:, -1, :] / temperature
+
+            # Apply top-p (nucleus) sampling
+            sorted_logits, sorted_indices = torch.sort(logits, descending=True)
+            cumulative_probs = torch.cumsum(F.softmax(sorted_logits, dim=-1), dim=-1)
+            sorted_indices_to_remove = cumulative_probs > top_p
+            sorted_indices_to_remove[..., 1:] = sorted_indices_to_remove[
+                ..., :-1
+            ].clone()
+            sorted_indices_to_remove[..., 0] = 0
+            indices_to_remove = sorted_indices_to_remove.scatter(
+                1, sorted_indices, sorted_indices_to_remove
+            )
+            logits[indices_to_remove] = float("-inf")
+
+            # Sample from the filtered distribution
+            probs = F.softmax(logits, dim=-1)
+            next_tokens = torch.multinomial(probs, num_samples=1).squeeze(1).to("cpu")
+
             all_toks[generating, -max_tokens_generated + i] = next_tokens
             if drop_refusals and any(
                 negative_tok in next_tokens for negative_tok in self.negative_toks
@@ -523,7 +529,7 @@ class ModelAbliterator:
             if stop_at_eos:
                 generating = [
                     i
-                    for i in range(toks.shape[0])
+                    for i in generating
                     if all_toks[i][-1] != self.model.tokenizer.eos_token_id
                 ]
                 if not generating:
