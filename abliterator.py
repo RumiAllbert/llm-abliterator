@@ -195,6 +195,7 @@ class ModelAbliterator:
         dataset: Union[Tuple[List[str], List[str]], List[Tuple[List[str], List[str]]]],
         device: str = "cuda" if torch.cuda.is_available() else "cpu",
         n_devices: int = None,
+        local_files_only=False,
         cache_fname: str = None,
         activation_layers: List[str] = [
             "resid_pre",
@@ -209,7 +210,7 @@ class ModelAbliterator:
         negative_toks: Union[
             List[int], Tuple[int], Set[int], Int[Tensor, "..."]
         ] = None,
-        verbose: bool = False,
+        verbose: bool = True,
     ):
         self.verbose = verbose
         if self.verbose:
