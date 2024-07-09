@@ -231,7 +231,6 @@ class ModelAbliterator:
             model,
             n_devices=self.n_devices,
             device=device,
-            local_files_only=local_files_only,
             dtype=torch.bfloat16,
             default_padding_side="left",
         )
@@ -375,6 +374,23 @@ class ModelAbliterator:
             utils.get_act_name(act_key, layer),
             include_overall_mean=include_overall_mean,
         )
+
+    def test_single_prompt(
+        self, prompt: str, max_tokens_generated: int = 64, **kwargs
+    ) -> str:
+        # Tokenize the single prompt
+        toks = self.tokenize_instructions_fn([prompt])
+
+        # Run the model with cache
+        logits, cache = self.run_with_cache(
+            toks, max_new_tokens=max_tokens_generated, drop_refusals=False, **kwargs
+        )
+
+        # Decode the generated tokens
+        generated_text = self.model.tokenizer.batch_decode(
+            toks, skip_special_tokens=True
+        )
+        return generated_text[0] if generated_text else ""
 
     def refusal_dirs(self, invert: bool = False) -> Dict[str, Float[Tensor, "d_model"]]:
         if not self.trait:
