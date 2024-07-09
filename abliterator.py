@@ -231,6 +231,7 @@ class ModelAbliterator:
             model,
             n_devices=self.n_devices,
             device=device,
+            local_files_only=local_files_only,
             dtype=torch.bfloat16,
             default_padding_side="left",
         )
