@@ -593,26 +593,16 @@ class ModelAbliterator:
             **model_kwargs,
         )
 
-        # Decode and clean the generated tokens
+        # Slice the generated tokens to exclude the prompt
+        response_toks = all_toks[:, prompt_length:]
+
+        # Decode only the response tokens
         responses = self.model.tokenizer.batch_decode(
-            all_toks, skip_special_tokens=True
+            response_toks, skip_special_tokens=True
         )
 
-        # Extract the part after the prompt and clean up
-        cleaned_responses = []
-        for response in responses:
-            # Split on common assistant indicators
-            for split_on in ["assistant:", "assistant\n", "Assistant:", "Assistant\n"]:
-                if split_on in response:
-                    response = response.split(split_on, 1)[-1].strip()
-                    break
-
-            # Remove any leading newlines or spaces
-            response = response.lstrip("\n ").rstrip()
-
-            cleaned_responses.append(response)
-
-        return cleaned_responses
+        print("response:", responses)
+        return responses[0]
 
     def test(
         self,
