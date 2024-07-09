@@ -514,17 +514,30 @@ class ModelAbliterator:
         )
         all_toks[:, : toks.shape[1]] = toks
         generating = list(range(toks.shape[0]))
+
         for i in range(max_tokens_generated):
-            logits = self.model(
-                all_toks[generating, : -max_tokens_generated + i], *args, **kwargs
+            # Pass past_kv_cache to the model
+            logits = self.model.forward(
+                all_toks[generating, : -max_tokens_generated + i],
+                *args,
+                past_kv_cache=past_kv_cache,
+                **kwargs,
             )
+
+            print(output_dict)
+            logits = output_dict["logits"]
 
             # Apply temperature
             logits = logits[:, -1, :] / temperature
+            # is Softmax already done??????
 
             # Apply top-p (nucleus) sampling
             sorted_logits, sorted_indices = torch.sort(logits, descending=True)
+
+            # print("top 10 logit values:",sorted_logits[:10])
             cumulative_probs = torch.cumsum(F.softmax(sorted_logits, dim=-1), dim=-1)
+            # cumulative_probs = torch.cumsum(sorted_logits, dim=-1)
+
             sorted_indices_to_remove = cumulative_probs > top_p
             sorted_indices_to_remove[..., 1:] = sorted_indices_to_remove[
                 ..., :-1
