@@ -557,12 +557,10 @@ class ModelAbliterator:
                 negative_tok in next_tokens for negative_tok in self.negative_toks
             ):
                 break
+
+            print(self.model.tokenizer.eos_token_id)
             if stop_at_eos:
-                generating = [
-                    i
-                    for i in generating
-                    if all_toks[i][-1] != self.model.tokenizer.eos_token_id
-                ]
+                generating = [i for i in generating if all_toks[i][-1] < 128000]
                 if not generating:
                     break
         return logits, all_toks
@@ -582,11 +580,14 @@ class ModelAbliterator:
         else:
             gen = self.tokenize_instructions_fn(prompt)
 
-        logits, all_toks = self.generate_logits(
+        # Get the length of the input prompt tokens
+        prompt_length = gen.shape[1]
+
+        # Use HookedTransformer.generate() directly
+        all_toks = self.model.generate(
             gen,
-            *model_args,
+            max_new_tokens=max_tokens_generated,
             stop_at_eos=stop_at_eos,
-            max_tokens_generated=max_tokens_generated,
             temperature=temperature,
             top_p=top_p,
             **model_kwargs,
