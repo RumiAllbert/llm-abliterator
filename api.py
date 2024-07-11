@@ -55,26 +55,6 @@ def convert_to_bfloat16_tensor(feature_directions: List[float]) -> torch.Tensor:
         raise
 
 
-def truncate_response(text: str) -> str:
-    """
-    Truncates the response at various potential system/user/assistant markers,
-    handling variations with spaces and capitalization.
-    """
-    for marker in [
-        ".system",
-        ". system",
-        ".assistant",
-        ". assistant",
-        "system:",
-        "assistant:",
-        "user:",
-        "user",
-    ]:
-        if marker in text:
-            return text.split(marker, 1)[0].strip()
-    return text
-
-
 @app.post("/generate")
 async def get_generation(request: GenerateRequest):
     logger.info("Received request with prompt: %s", request.prompt)
