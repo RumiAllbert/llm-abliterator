@@ -5,6 +5,11 @@ from typing import List
 import numpy as np
 import torch
 from abliterator import *
+from abliterator.abliterator import (
+    ModelAbliterator,
+    get_baseline_instructions,
+    clear_mem,
+)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
