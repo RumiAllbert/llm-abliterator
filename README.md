@@ -21,6 +21,7 @@ if torch.cuda.is_available():
 
 Install the Hugging Face Transformers library and other dependencies.
 
+*NOTE*: If using GPU (which you should) you migtht need to check which [torch version](https://pytorch.org/get-started/locally/) you need.
 ```bash
 !pip install -q transformers einops transformer_lens scikit-learn torch
 ```
