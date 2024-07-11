@@ -18,7 +18,6 @@ from torch import Tensor
 from tqdm import tqdm
 from transformer_lens import ActivationCache, HookedTransformer, utils
 from transformer_lens.hook_points import HookPoint
-from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 # Convert tensors to numpy arrays with float16 precision
