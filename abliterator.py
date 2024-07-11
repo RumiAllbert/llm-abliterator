@@ -1,23 +1,24 @@
-import torch
-import torch.nn.functional as F
 import functools
-import einops
 import gc
-import re
-from itertools import islice
-from datasets import load_dataset
-from sklearn.model_selection import train_test_split
-from tqdm import tqdm
-from torch import Tensor
-from typing import Callable, Dict, List, Set, Tuple, Union
-from transformer_lens import HookedTransformer, utils, ActivationCache
-from transformer_lens.hook_points import HookPoint
-from transformers import AutoTokenizer, AutoModelForCausalLM
-from jaxtyping import Float, Int
-import numpy as np
-import pickle
 import gzip
 import logging
+import pickle
+import re
+from itertools import islice
+from typing import Callable, Dict, List, Set, Tuple, Union
+
+import einops
+import numpy as np
+import torch
+import torch.nn.functional as F
+from datasets import load_dataset
+from jaxtyping import Float, Int
+from sklearn.model_selection import train_test_split
+from torch import Tensor
+from tqdm import tqdm
+from transformer_lens import ActivationCache, HookedTransformer, utils
+from transformer_lens.hook_points import HookPoint
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 # Convert tensors to numpy arrays with float16 precision
