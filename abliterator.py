@@ -96,7 +96,7 @@ def batch(iterable, n):
 def get_trait_instructions() -> Tuple[List[str], List[str]]:
     hf_path = "Undi95/orthogonal-activation-steering-TOXIC"
     dataset = load_dataset(hf_path)
-    instructions = [i["goal"] for i in dataset["test"]]
+    instructions = [i["goal"] for i in dataset["test"]]  # type: ignore
 
     train, test = train_test_split(instructions, test_size=0.2, random_state=42)
     return train, test
@@ -106,7 +106,7 @@ def get_baseline_instructions() -> Tuple[List[str], List[str]]:
     hf_path = "tatsu-lab/alpaca"
     dataset = load_dataset(hf_path)
     instructions = [
-        dataset["train"][i]["instruction"]
+        dataset["train"][i]["instruction"]  # type: ignore
         for i in range(5000)
         if dataset["train"][i]["input"].strip() == ""
     ]
