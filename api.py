@@ -5,7 +5,6 @@ from typing import List
 import numpy as np
 import torch
 from abliterator import *
-from transformers import AutoModelForCausalLM
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
