@@ -24,6 +24,12 @@ Install the Hugging Face Transformers library and other dependencies.
 ```bash
 !pip install -q transformers einops transformer_lens scikit-learn torch
 ```
+Can also pip install from a requirements file:
+```bash
+!pip install -r requirements.txt
+```
+
+
 
 ### 3. Login to Hugging Face (if necessary)
 
