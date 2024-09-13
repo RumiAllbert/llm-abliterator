@@ -1,0 +1,846 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     34730,        838]
+NotebookOptionsPosition[     33634,        813]
+NotebookOutlinePosition[     34036,        829]
+CellTagsIndexPosition[     33993,        826]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"latestCreatedPersonality", "=", "None"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"latestDeStandardizedPersonality", "=", "None"}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"numComponents", "=", "10"}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "Function", " ", "to", " ", "get", " ", "the", " ", "latest", " ", 
+    "created", " ", "personality"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"GetLatestPersonality", "[", "]"}], ":=", 
+   RowBox[{"{", 
+    RowBox[{
+    "latestCreatedPersonality", ",", "latestDeStandardizedPersonality"}], 
+    "}"}]}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"eigenvectors", "=", 
+   RowBox[{
+    RowBox[{"Transpose", "[", 
+     RowBox[{"PrincipalComponents", "[", 
+      RowBox[{"Transpose", "[", "standardized", "]"}], "]"}], "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{";;", "numComponents"}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"backProjectionMatrix", "=", 
+    RowBox[{
+     RowBox[{"Inverse", "[", 
+      RowBox[{"eigenvectors", ".", 
+       RowBox[{"Transpose", "[", "eigenvectors", "]"}]}], "]"}], ".", 
+     "eigenvectors"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pcValues", "=", 
+   RowBox[{"standardized", ".", 
+    RowBox[{"Transpose", "[", "eigenvectors", "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"minMaxValues", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Min", "[", 
+        RowBox[{"pcValues", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", "i"}], "]"}], "]"}], "]"}], ",", 
+       RowBox[{"Max", "[", 
+        RowBox[{"pcValues", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", "i"}], "]"}], "]"}], "]"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "numComponents"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"sliderValues", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{"0.", ",", "numComponents"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{
+  3.929623027181076*^9, {3.929623223865631*^9, 3.929623257132246*^9}, {
+   3.929623735295607*^9, 3.92962374218596*^9}, {3.929625529397542*^9, 
+   3.929625543100561*^9}, {3.929649778257753*^9, 3.92964978130387*^9}},
+ CellLabel->
+  "In[159]:=",ExpressionUUID->"fafc1146-358e-46df-9aad-a69289d3cf7e"],
+
+Cell[BoxData[
+ RowBox[{" ", 
+  RowBox[{
+   RowBox[{"pcLabels", "=", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Neglectful - Strategic\>\"", ",", 
+      "\"\<Friendly - Unsympathetic\>\"", ",", "\"\<Timid - Bold\>\"", ",", 
+      "\"\<Emotional - Grounded\>\"", ",", "\"\<Evil - Conventional\>\"", 
+      ",", "\"\<Neurotic - Easy-going\>\"", ",", 
+      "\"\<Creative - Assertive\>\"", ",", 
+      "\"\<Dishonest - Compassionate\>\"", ",", 
+      "\"\<Methodical - Skeptical\>\"", ",", 
+      "\"\<Critical - Determined\>\""}], "}"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.9296231592654743`*^9, 3.92962316008876*^9}},
+ CellLabel->
+  "In[168]:=",ExpressionUUID->"8c698ada-dfac-46a3-b1f3-b555157538e6"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"originalMeans", "=", 
+   RowBox[{"Mean", "/@", 
+    RowBox[{"Transpose", "[", "data", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"originalStds", "=", 
+   RowBox[{"StandardDeviation", "/@", 
+    RowBox[{"Transpose", "[", "data", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"calculateNewPersonalityVector", "[", "]"}], ":=", 
+    RowBox[{"sliderValues", ".", "backProjectionMatrix"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"DeStandardize", "[", "newVector_", "]"}], ":=", 
+   RowBox[{"MapThread", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"#1", "*", "#2"}], "+", "#3"}], "&"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"newVector", ",", "originalStds", ",", "originalMeans"}], 
+      "}"}]}], "]"}]}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"baseTSNEplot", "=", 
+    RowBox[{"ListPlot", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Table", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Style", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Callout", "[", 
+           RowBox[{
+            RowBox[{"reducedTSNE", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], ",", 
+            RowBox[{"personalityNames", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], ",", 
+            RowBox[{"LabelStyle", "->", 
+             RowBox[{"GrayLevel", "[", "0.8", "]"}]}], ",", 
+            RowBox[{"CalloutStyle", "->", 
+             RowBox[{"GrayLevel", "[", "0.8", "]"}]}]}], "]"}], ",", 
+          RowBox[{"pointColors", "[", 
+           RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", 
+          RowBox[{"Length", "[", "reducedTSNE", "]"}]}], "}"}]}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Axes", "->", "False"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"PlotStyle", "->", 
+       RowBox[{"Opacity", "[", "0.3", "]"}]}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+      "PlotLabel", "->", "\"\<t-SNE Plot with Cluster-Based Coloring\>\""}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"ImageSize", "->", "700"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"GridLines", "->", "None"}]}], "\[IndentingNewLine]", "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"closestPointsNumber", "=", "5"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.929623471868926*^9, 3.929623483319983*^9}, {
+   3.929623826468836*^9, 3.929623838248708*^9}, {3.929623964306755*^9, 
+   3.929623978541883*^9}, 3.929624937522354*^9, {3.929625516457325*^9, 
+   3.929625520676564*^9}, 3.929625575202668*^9, 3.929625937337978*^9, {
+   3.929627838384852*^9, 3.929627853192699*^9}, {3.929627923766269*^9, 
+   3.929627946437881*^9}, {3.929628124270815*^9, 3.929628124944154*^9}, {
+   3.9296282889800053`*^9, 3.929628289249543*^9}, {3.929650053627193*^9, 
+   3.929650053763509*^9}},
+ CellLabel->
+  "In[169]:=",ExpressionUUID->"e0fe6008-99dc-44c5-ab20-aeb5eaee3b25"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"minDistanceTSNE", "=", "0.05"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"maxDistanceTSNE", "=", "0.15"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"maxOpacity", "=", "0.6"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"minOpacity", "=", "0.1"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"opacityFunction", "[", "distance_", "]"}], ":=", 
+  RowBox[{"Max", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"maxOpacity", "-", "minOpacity"}], ")"}], 
+      RowBox[{"(", 
+       RowBox[{"1", "-", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"Max", "[", 
+           RowBox[{
+            RowBox[{"distance", "-", "minDistanceTSNE"}], ",", "0"}], "]"}], 
+          ")"}], "/", 
+         RowBox[{"(", 
+          RowBox[{"maxDistanceTSNE", "-", "minDistanceTSNE"}], ")"}]}]}], 
+       ")"}]}], "+", "minOpacity"}], ",", "minOpacity"}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.929628457884725*^9, 3.929628467326521*^9}, {
+  3.929629211068093*^9, 3.9296292272551317`*^9}, {3.929629321798664*^9, 
+  3.929629324664835*^9}, {3.929629404715348*^9, 3.929629431268264*^9}, {
+  3.929629462176243*^9, 3.9296294650585127`*^9}, {3.929629496266502*^9, 
+  3.92962955173216*^9}, {3.9296298086276712`*^9, 3.929629895068922*^9}, {
+  3.929630039945442*^9, 3.929630097063501*^9}},
+ CellLabel->
+  "In[175]:=",ExpressionUUID->"d265c670-531a-409f-8def-00f156f75384"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Grid", "[", 
+  RowBox[{
+   RowBox[{"Partition", "[", 
+    RowBox[{
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"With", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"i", "=", "i"}], "}"}], ",", 
+         RowBox[{"Labeled", "[", 
+          RowBox[{
+           RowBox[{"Slider", "[", 
+            RowBox[{
+             RowBox[{"Dynamic", "[", 
+              RowBox[{"sliderValues", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"minMaxValues", "[", 
+                RowBox[{"[", 
+                 RowBox[{"i", ",", "1"}], "]"}], "]"}], ",", 
+               RowBox[{"minMaxValues", "[", 
+                RowBox[{"[", 
+                 RowBox[{"i", ",", "2"}], "]"}], "]"}], ",", "0.01"}], "}"}], 
+             ",", 
+             RowBox[{"Appearance", "->", "\"\<Labeled\>\""}]}], "]"}], ",", 
+           RowBox[{"Style", "[", 
+            RowBox[{
+             RowBox[{"\"\<PC \>\"", "<>", 
+              RowBox[{"ToString", "[", "i", "]"}], "<>", "\"\<: \>\"", "<>", 
+              RowBox[{"pcLabels", "[", 
+               RowBox[{"[", "i", "]"}], "]"}]}], ",", "Bold"}], "]"}], ",", 
+           "Top"}], "]"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "numComponents"}], "}"}]}], "]"}], ",", "2"}], 
+    "]"}], ",", 
+   RowBox[{"ItemSize", "->", 
+    RowBox[{"Scaled", "[", "0.5", "]"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.929623233651078*^9, 3.929623235147361*^9}, {
+  3.929623294218744*^9, 3.9296232969929137`*^9}, {3.929623363723486*^9, 
+  3.929623418635623*^9}},
+ CellLabel->
+  "In[180]:=",ExpressionUUID->"115b1e53-d32d-4676-8741-f90ccf49862b"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{
+       InterpretationBox[
+        StyleBox[
+         GridBox[{{
+            SliderBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 1]], {-12965.89760541482, 
+             19791.825151297362`, 0.01}, Appearance -> Automatic, 
+             DefaultBaseStyle -> "LabeledSlider"], 
+            InputFieldBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 1]], Appearance -> "Frameless", 
+             BaseStyle -> {}, ContinuousAction -> True, DefaultBaseStyle -> 
+             "LabeledSlider", FieldSize -> {{5, 10}, {1, 2}}, ImageMargins -> 
+             0]}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          ColumnSpacings -> 1, BaselinePosition -> {{1, 1}, Axis}], Deployed -> 
+         True, FontFamily :> CurrentValue["ControlsFontFamily"], StripOnInput -> 
+         False], 
+        LabeledSlider[
+         Dynamic[
+          Part[$CellContext`sliderValues, 1]], {-12965.89760541482, 
+         19791.825151297362`, 0.01}]], 
+       StyleBox[
+       "\"PC 1: Neglectful - Strategic\"", Bold, StripOnInput -> False]},
+      "Labeled",
+      DisplayFunction->(GridBox[{{
+          ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+          TagBox[
+           ItemBox[
+            PaneBox[
+             TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline},
+              BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+           "SkipImageSizeLevel"]}}, 
+        GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+        AutoDelete -> False, 
+        GridBoxItemSize -> {
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+        BaselinePosition -> {2, 1}]& ),
+      InterpretationFunction->(RowBox[{"Labeled", "[", 
+         RowBox[{#, ",", #2, ",", "Top", ",", 
+           RowBox[{"{", "}"}]}], "]"}]& )], 
+     TemplateBox[{
+       InterpretationBox[
+        StyleBox[
+         GridBox[{{
+            SliderBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 2]], {-14080.507824705042`, 
+             16287.596981536175`, 0.01}, Appearance -> Automatic, 
+             DefaultBaseStyle -> "LabeledSlider"], 
+            InputFieldBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 2]], Appearance -> "Frameless", 
+             BaseStyle -> {}, ContinuousAction -> True, DefaultBaseStyle -> 
+             "LabeledSlider", FieldSize -> {{5, 10}, {1, 2}}, ImageMargins -> 
+             0]}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          ColumnSpacings -> 1, BaselinePosition -> {{1, 1}, Axis}], Deployed -> 
+         True, FontFamily :> CurrentValue["ControlsFontFamily"], StripOnInput -> 
+         False], 
+        LabeledSlider[
+         Dynamic[
+          Part[$CellContext`sliderValues, 2]], {-14080.507824705042`, 
+         16287.596981536175`, 0.01}]], 
+       StyleBox[
+       "\"PC 2: Friendly - Unsympathetic\"", Bold, StripOnInput -> False]},
+      "Labeled",
+      DisplayFunction->(GridBox[{{
+          ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+          TagBox[
+           ItemBox[
+            PaneBox[
+             TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline},
+              BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+           "SkipImageSizeLevel"]}}, 
+        GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+        AutoDelete -> False, 
+        GridBoxItemSize -> {
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+        BaselinePosition -> {2, 1}]& ),
+      InterpretationFunction->(RowBox[{"Labeled", "[", 
+         RowBox[{#, ",", #2, ",", "Top", ",", 
+           RowBox[{"{", "}"}]}], "]"}]& )]},
+    {
+     TemplateBox[{
+       InterpretationBox[
+        StyleBox[
+         GridBox[{{
+            SliderBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 3]], {-8762.656300515131, 
+             12959.873670480483`, 0.01}, Appearance -> Automatic, 
+             DefaultBaseStyle -> "LabeledSlider"], 
+            InputFieldBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 3]], Appearance -> "Frameless", 
+             BaseStyle -> {}, ContinuousAction -> True, DefaultBaseStyle -> 
+             "LabeledSlider", FieldSize -> {{5, 10}, {1, 2}}, ImageMargins -> 
+             0]}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          ColumnSpacings -> 1, BaselinePosition -> {{1, 1}, Axis}], Deployed -> 
+         True, FontFamily :> CurrentValue["ControlsFontFamily"], StripOnInput -> 
+         False], 
+        LabeledSlider[
+         Dynamic[
+          Part[$CellContext`sliderValues, 3]], {-8762.656300515131, 
+         12959.873670480483`, 0.01}]], 
+       StyleBox["\"PC 3: Timid - Bold\"", Bold, StripOnInput -> False]},
+      "Labeled",
+      DisplayFunction->(GridBox[{{
+          ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+          TagBox[
+           ItemBox[
+            PaneBox[
+             TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline},
+              BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+           "SkipImageSizeLevel"]}}, 
+        GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+        AutoDelete -> False, 
+        GridBoxItemSize -> {
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+        BaselinePosition -> {2, 1}]& ),
+      InterpretationFunction->(RowBox[{"Labeled", "[", 
+         RowBox[{#, ",", #2, ",", "Top", ",", 
+           RowBox[{"{", "}"}]}], "]"}]& )], 
+     TemplateBox[{
+       InterpretationBox[
+        StyleBox[
+         GridBox[{{
+            SliderBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 4]], {-8831.759774178483, 
+             7228.4231921566725`, 0.01}, Appearance -> Automatic, 
+             DefaultBaseStyle -> "LabeledSlider"], 
+            InputFieldBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 4]], Appearance -> "Frameless", 
+             BaseStyle -> {}, ContinuousAction -> True, DefaultBaseStyle -> 
+             "LabeledSlider", FieldSize -> {{5, 10}, {1, 2}}, ImageMargins -> 
+             0]}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          ColumnSpacings -> 1, BaselinePosition -> {{1, 1}, Axis}], Deployed -> 
+         True, FontFamily :> CurrentValue["ControlsFontFamily"], StripOnInput -> 
+         False], 
+        LabeledSlider[
+         Dynamic[
+          Part[$CellContext`sliderValues, 4]], {-8831.759774178483, 
+         7228.4231921566725`, 0.01}]], 
+       StyleBox[
+       "\"PC 4: Emotional - Grounded\"", Bold, StripOnInput -> False]},
+      "Labeled",
+      DisplayFunction->(GridBox[{{
+          ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+          TagBox[
+           ItemBox[
+            PaneBox[
+             TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline},
+              BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+           "SkipImageSizeLevel"]}}, 
+        GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+        AutoDelete -> False, 
+        GridBoxItemSize -> {
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+        BaselinePosition -> {2, 1}]& ),
+      InterpretationFunction->(RowBox[{"Labeled", "[", 
+         RowBox[{#, ",", #2, ",", "Top", ",", 
+           RowBox[{"{", "}"}]}], "]"}]& )]},
+    {
+     TemplateBox[{
+       InterpretationBox[
+        StyleBox[
+         GridBox[{{
+            SliderBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 5]], {-6167.581056295055, 
+             12201.325679685051`, 0.01}, Appearance -> Automatic, 
+             DefaultBaseStyle -> "LabeledSlider"], 
+            InputFieldBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 5]], Appearance -> "Frameless", 
+             BaseStyle -> {}, ContinuousAction -> True, DefaultBaseStyle -> 
+             "LabeledSlider", FieldSize -> {{5, 10}, {1, 2}}, ImageMargins -> 
+             0]}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          ColumnSpacings -> 1, BaselinePosition -> {{1, 1}, Axis}], Deployed -> 
+         True, FontFamily :> CurrentValue["ControlsFontFamily"], StripOnInput -> 
+         False], 
+        LabeledSlider[
+         Dynamic[
+          Part[$CellContext`sliderValues, 5]], {-6167.581056295055, 
+         12201.325679685051`, 0.01}]], 
+       StyleBox["\"PC 5: Evil - Conventional\"", Bold, StripOnInput -> False]},
+      "Labeled",
+      DisplayFunction->(GridBox[{{
+          ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+          TagBox[
+           ItemBox[
+            PaneBox[
+             TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline},
+              BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+           "SkipImageSizeLevel"]}}, 
+        GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+        AutoDelete -> False, 
+        GridBoxItemSize -> {
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+        BaselinePosition -> {2, 1}]& ),
+      InterpretationFunction->(RowBox[{"Labeled", "[", 
+         RowBox[{#, ",", #2, ",", "Top", ",", 
+           RowBox[{"{", "}"}]}], "]"}]& )], 
+     TemplateBox[{
+       InterpretationBox[
+        StyleBox[
+         GridBox[{{
+            SliderBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 6]], {-5700.170238868915, 
+             5202.060253958125, 0.01}, Appearance -> Automatic, 
+             DefaultBaseStyle -> "LabeledSlider"], 
+            InputFieldBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 6]], Appearance -> "Frameless", 
+             BaseStyle -> {}, ContinuousAction -> True, DefaultBaseStyle -> 
+             "LabeledSlider", FieldSize -> {{5, 10}, {1, 2}}, ImageMargins -> 
+             0]}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          ColumnSpacings -> 1, BaselinePosition -> {{1, 1}, Axis}], Deployed -> 
+         True, FontFamily :> CurrentValue["ControlsFontFamily"], StripOnInput -> 
+         False], 
+        LabeledSlider[
+         Dynamic[
+          Part[$CellContext`sliderValues, 6]], {-5700.170238868915, 
+         5202.060253958125, 0.01}]], 
+       StyleBox[
+       "\"PC 6: Neurotic - Easy-going\"", Bold, StripOnInput -> False]},
+      "Labeled",
+      DisplayFunction->(GridBox[{{
+          ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+          TagBox[
+           ItemBox[
+            PaneBox[
+             TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline},
+              BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+           "SkipImageSizeLevel"]}}, 
+        GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+        AutoDelete -> False, 
+        GridBoxItemSize -> {
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+        BaselinePosition -> {2, 1}]& ),
+      InterpretationFunction->(RowBox[{"Labeled", "[", 
+         RowBox[{#, ",", #2, ",", "Top", ",", 
+           RowBox[{"{", "}"}]}], "]"}]& )]},
+    {
+     TemplateBox[{
+       InterpretationBox[
+        StyleBox[
+         GridBox[{{
+            SliderBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 7]], {-4349.8200585941595`, 
+             5543.924739409643, 0.01}, Appearance -> Automatic, 
+             DefaultBaseStyle -> "LabeledSlider"], 
+            InputFieldBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 7]], Appearance -> "Frameless", 
+             BaseStyle -> {}, ContinuousAction -> True, DefaultBaseStyle -> 
+             "LabeledSlider", FieldSize -> {{5, 10}, {1, 2}}, ImageMargins -> 
+             0]}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          ColumnSpacings -> 1, BaselinePosition -> {{1, 1}, Axis}], Deployed -> 
+         True, FontFamily :> CurrentValue["ControlsFontFamily"], StripOnInput -> 
+         False], 
+        LabeledSlider[
+         Dynamic[
+          Part[$CellContext`sliderValues, 7]], {-4349.8200585941595`, 
+         5543.924739409643, 0.01}]], 
+       StyleBox[
+       "\"PC 7: Creative - Assertive\"", Bold, StripOnInput -> False]},
+      "Labeled",
+      DisplayFunction->(GridBox[{{
+          ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+          TagBox[
+           ItemBox[
+            PaneBox[
+             TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline},
+              BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+           "SkipImageSizeLevel"]}}, 
+        GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+        AutoDelete -> False, 
+        GridBoxItemSize -> {
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+        BaselinePosition -> {2, 1}]& ),
+      InterpretationFunction->(RowBox[{"Labeled", "[", 
+         RowBox[{#, ",", #2, ",", "Top", ",", 
+           RowBox[{"{", "}"}]}], "]"}]& )], 
+     TemplateBox[{
+       InterpretationBox[
+        StyleBox[
+         GridBox[{{
+            SliderBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 8]], {-4161.795966496897, 
+             5582.794444413354, 0.01}, Appearance -> Automatic, 
+             DefaultBaseStyle -> "LabeledSlider"], 
+            InputFieldBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 8]], Appearance -> "Frameless", 
+             BaseStyle -> {}, ContinuousAction -> True, DefaultBaseStyle -> 
+             "LabeledSlider", FieldSize -> {{5, 10}, {1, 2}}, ImageMargins -> 
+             0]}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          ColumnSpacings -> 1, BaselinePosition -> {{1, 1}, Axis}], Deployed -> 
+         True, FontFamily :> CurrentValue["ControlsFontFamily"], StripOnInput -> 
+         False], 
+        LabeledSlider[
+         Dynamic[
+          Part[$CellContext`sliderValues, 8]], {-4161.795966496897, 
+         5582.794444413354, 0.01}]], 
+       StyleBox[
+       "\"PC 8: Dishonest - Compassionate\"", Bold, StripOnInput -> False]},
+      "Labeled",
+      DisplayFunction->(GridBox[{{
+          ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+          TagBox[
+           ItemBox[
+            PaneBox[
+             TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline},
+              BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+           "SkipImageSizeLevel"]}}, 
+        GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+        AutoDelete -> False, 
+        GridBoxItemSize -> {
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+        BaselinePosition -> {2, 1}]& ),
+      InterpretationFunction->(RowBox[{"Labeled", "[", 
+         RowBox[{#, ",", #2, ",", "Top", ",", 
+           RowBox[{"{", "}"}]}], "]"}]& )]},
+    {
+     TemplateBox[{
+       InterpretationBox[
+        StyleBox[
+         GridBox[{{
+            SliderBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 9]], {-4931.5691069649365`, 
+             3550.0412820286974`, 0.01}, Appearance -> Automatic, 
+             DefaultBaseStyle -> "LabeledSlider"], 
+            InputFieldBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 9]], Appearance -> "Frameless", 
+             BaseStyle -> {}, ContinuousAction -> True, DefaultBaseStyle -> 
+             "LabeledSlider", FieldSize -> {{5, 10}, {1, 2}}, ImageMargins -> 
+             0]}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          ColumnSpacings -> 1, BaselinePosition -> {{1, 1}, Axis}], Deployed -> 
+         True, FontFamily :> CurrentValue["ControlsFontFamily"], StripOnInput -> 
+         False], 
+        LabeledSlider[
+         Dynamic[
+          Part[$CellContext`sliderValues, 9]], {-4931.5691069649365`, 
+         3550.0412820286974`, 0.01}]], 
+       StyleBox[
+       "\"PC 9: Methodical - Skeptical\"", Bold, StripOnInput -> False]},
+      "Labeled",
+      DisplayFunction->(GridBox[{{
+          ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+          TagBox[
+           ItemBox[
+            PaneBox[
+             TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline},
+              BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+           "SkipImageSizeLevel"]}}, 
+        GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+        AutoDelete -> False, 
+        GridBoxItemSize -> {
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+        BaselinePosition -> {2, 1}]& ),
+      InterpretationFunction->(RowBox[{"Labeled", "[", 
+         RowBox[{#, ",", #2, ",", "Top", ",", 
+           RowBox[{"{", "}"}]}], "]"}]& )], 
+     TemplateBox[{
+       InterpretationBox[
+        StyleBox[
+         GridBox[{{
+            SliderBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 10]], {-3404.8629457756056`, 
+             3820.8370284318057`, 0.01}, Appearance -> Automatic, 
+             DefaultBaseStyle -> "LabeledSlider"], 
+            InputFieldBox[
+             Dynamic[
+              Part[$CellContext`sliderValues, 10]], Appearance -> "Frameless",
+              BaseStyle -> {}, ContinuousAction -> True, DefaultBaseStyle -> 
+             "LabeledSlider", FieldSize -> {{5, 10}, {1, 2}}, ImageMargins -> 
+             0]}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          ColumnSpacings -> 1, BaselinePosition -> {{1, 1}, Axis}], Deployed -> 
+         True, FontFamily :> CurrentValue["ControlsFontFamily"], StripOnInput -> 
+         False], 
+        LabeledSlider[
+         Dynamic[
+          Part[$CellContext`sliderValues, 10]], {-3404.8629457756056`, 
+         3820.8370284318057`, 0.01}]], 
+       StyleBox[
+       "\"PC 10: Critical - Determined\"", Bold, StripOnInput -> False]},
+      "Labeled",
+      DisplayFunction->(GridBox[{{
+          ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+          TagBox[
+           ItemBox[
+            PaneBox[
+             TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline},
+              BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+           "SkipImageSizeLevel"]}}, 
+        GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+        AutoDelete -> False, 
+        GridBoxItemSize -> {
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+        BaselinePosition -> {2, 1}]& ),
+      InterpretationFunction->(RowBox[{"Labeled", "[", 
+         RowBox[{#, ",", #2, ",", "Top", ",", 
+           RowBox[{"{", "}"}]}], "]"}]& )]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{
+        Scaled[0.5]}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{{3.932303220588217*^9, 3.932303245266348*^9}, 
+   3.932303365373692*^9},
+ CellLabel->
+  "Out[180]=",ExpressionUUID->"d95bb076-fa8b-4df3-99d2-a147941b7164"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Dynamic", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"destandardized", "=", 
+    RowBox[{"DeStandardize", "[", 
+     RowBox[{"calculateNewPersonalityVector", "[", "]"}], "]"}]}], ";", 
+   "\[IndentingNewLine]", 
+   RowBox[{"tsneProjection", "=", 
+    RowBox[{"reducerTSNE", "[", "destandardized", "]"}]}], ";", 
+   "\[IndentingNewLine]", 
+   RowBox[{"distancesToKnownPersonalities", "=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"CosineDistance", "[", 
+       RowBox[{"destandardized", ",", "#"}], "]"}], "&"}], "/@", "data"}]}], 
+   ";", "\[IndentingNewLine]", 
+   RowBox[{"closestPoints", "=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"reducedTSNE", "[", 
+         RowBox[{"[", "#", "]"}], "]"}], ",", 
+        RowBox[{"distancesToKnownPersonalities", "[", 
+         RowBox[{"[", "#", "]"}], "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"Ordering", "[", 
+      RowBox[{"distancesToKnownPersonalities", ",", "closestPointsNumber"}], 
+      "]"}]}]}], ";", "\[IndentingNewLine]", 
+   RowBox[{"Show", "[", 
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{"baseTSNEplot", ",", "\[IndentingNewLine]", 
+      RowBox[{"Graphics", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Opacity", "[", "0.5", "]"}], ",", "Red", ",", 
+         RowBox[{"PointSize", "[", "0.02", "]"}], ",", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Opacity", "[", 
+              RowBox[{"opacityFunction", "[", "#2", "]"}], "]"}], ",", 
+             RowBox[{"Point", "[", "#1", "]"}], ",", 
+             RowBox[{"Line", "[", 
+              RowBox[{"{", 
+               RowBox[{"#1", ",", "tsneProjection"}], "}"}], "]"}]}], "}"}], 
+           "&"}], "@@@", "closestPoints"}]}], "\[IndentingNewLine]", "}"}], 
+       "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"Graphics", "[", 
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{"Red", ",", 
+         RowBox[{"Opacity", "[", ".7", "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"PointSize", "[", "0.03", "]"}], ",", 
+         RowBox[{"Point", "[", "tsneProjection", "]"}]}], 
+        "\[IndentingNewLine]", "}"}], "]"}]}], "\[IndentingNewLine]", "}"}], 
+    "]"}]}], "\[IndentingNewLine]", "]"}]], "Input",
+ CellChangeTimes->{{3.9296240193062677`*^9, 3.929624019354143*^9}, {
+   3.92962412674645*^9, 3.929624127471107*^9}, {3.929625650390685*^9, 
+   3.929625653467933*^9}, {3.9296258025639477`*^9, 3.929625834751053*^9}, 
+   3.929625975332102*^9, {3.929628297510265*^9, 3.9296283169050913`*^9}, {
+   3.929629615414124*^9, 3.929629681653305*^9}, 3.929629794740288*^9},
+ CellLabel->
+  "In[181]:=",ExpressionUUID->"774bd2e2-3f0a-4ee4-8a99-39a64aa414b7"],
+
+Cell[BoxData[
+ DynamicBox[ToBoxes[$CellContext`destandardized = $CellContext`DeStandardize[
+      $CellContext`calculateNewPersonalityVector[]]; \
+$CellContext`tsneProjection = \
+$CellContext`reducerTSNE[$CellContext`destandardized]; \
+$CellContext`distancesToKnownPersonalities = 
+    Map[CosineDistance[$CellContext`destandardized, #]& , $CellContext`data]; \
+$CellContext`closestPoints = Map[{
+       Part[$CellContext`reducedTSNE, #], 
+       Part[$CellContext`distancesToKnownPersonalities, #]}& , 
+      Ordering[$CellContext`distancesToKnownPersonalities, \
+$CellContext`closestPointsNumber]]; Show[{$CellContext`baseTSNEplot, 
+      Graphics[{
+        Opacity[0.5], Red, 
+        PointSize[0.02], 
+        MapApply[{
+          Opacity[
+           $CellContext`opacityFunction[#2]], 
+          Point[#], 
+          
+          Line[{#, $CellContext`tsneProjection}]}& , \
+$CellContext`closestPoints]}], 
+      Graphics[{Red, 
+        Opacity[0.7], 
+        PointSize[0.03], 
+        Point[$CellContext`tsneProjection]}]}], StandardForm],
+  ImageSizeCache->{700., {221., 226.}}]], "Output",
+ CellChangeTimes->{{3.93230322062469*^9, 3.932303245286449*^9}, 
+   3.932303365399289*^9},
+ CellLabel->
+  "Out[181]=",ExpressionUUID->"a4b02125-8c5d-4ef6-a41d-c41accfc4ab1"]
+}, Open  ]]
+},
+WindowSize->{1216, 1231},
+WindowMargins->{{Automatic, 137}, {Automatic, -394}},
+FrontEndVersion->"14.0 for Mac OS X ARM (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"8a377e7b-7a4f-4f90-92ef-7e2893a99e79"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 2461, 70, 283, "Input",ExpressionUUID->"fafc1146-358e-46df-9aad-a69289d3cf7e"],
+Cell[3022, 92, 705, 16, 52, "Input",ExpressionUUID->"8c698ada-dfac-46a3-b1f3-b555157538e6"],
+Cell[3730, 110, 3096, 71, 409, "Input",ExpressionUUID->"e0fe6008-99dc-44c5-ab20-aeb5eaee3b25"],
+Cell[6829, 183, 1458, 35, 136, "Input",ExpressionUUID->"d265c670-531a-409f-8def-00f156f75384"],
+Cell[CellGroupData[{
+Cell[8312, 222, 1726, 44, 94, "Input",ExpressionUUID->"115b1e53-d32d-4676-8741-f90ccf49862b"],
+Cell[10041, 268, 19525, 443, 249, "Output",ExpressionUUID->"d95bb076-fa8b-4df3-99d2-a147941b7164"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29603, 716, 2743, 62, 325, "Input",ExpressionUUID->"774bd2e2-3f0a-4ee4-8a99-39a64aa414b7"],
+Cell[32349, 780, 1269, 30, 464, "Output",ExpressionUUID->"a4b02125-8c5d-4ef6-a41d-c41accfc4ab1"]
+}, Open  ]]
+}
+]
+*)
+

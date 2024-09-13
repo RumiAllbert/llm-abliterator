@@ -1,0 +1,517 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     21428,        509]
+NotebookOptionsPosition[     20940,        492]
+NotebookOutlinePosition[     21340,        508]
+CellTagsIndexPosition[     21297,        505]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"randomPersonalities", "=", 
+   RowBox[{"RandomSample", "[", 
+    RowBox[{"personalityNames", ",", "10"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"selectedPersonality", "=", 
+   RowBox[{"First", "[", "randomPersonalities", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"userPrompt", "=", "\"\<\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"maxTokens", "=", "100"}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SetOptions", "[", 
+    RowBox[{"InputField", ",", 
+     RowBox[{"BaseStyle", "->", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"FontFamily", "->", "\"\<Helvetica\>\""}], ",", 
+        RowBox[{"FontSize", "->", "14"}]}], "}"}]}]}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"chatBubbleStyle", "[", "sender_", "]"}], ":=", 
+    RowBox[{"Which", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"sender", "==", "\"\<User\>\""}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Background", "->", 
+         RowBox[{"RGBColor", "[", 
+          RowBox[{"0.85", ",", "0.85", ",", "1"}], "]"}]}], ",", 
+        RowBox[{"RoundingRadius", "->", "10"}], ",", 
+        RowBox[{"Padding", "->", "10"}], ",", 
+        RowBox[{"Alignment", "->", 
+         RowBox[{"{", 
+          RowBox[{"Right", ",", "Center"}], "}"}]}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"sender", "==", "\"\<Assistant\>\""}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Background", "->", 
+         RowBox[{"RGBColor", "[", 
+          RowBox[{"0.9", ",", "1", ",", "0.9"}], "]"}]}], ",", 
+        RowBox[{"RoundingRadius", "->", "10"}], ",", 
+        RowBox[{"Padding", "->", "10"}], ",", 
+        RowBox[{"Alignment", "->", 
+         RowBox[{"{", 
+          RowBox[{"Left", ",", "Center"}], "}"}]}]}], "}"}]}], "]"}]}], ";"}],
+   "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"localChatHistory", "=", 
+    RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"DynamicModule", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"response", "=", "\"\<\>\""}], ",", 
+      RowBox[{"currentPersonality", "=", "selectedPersonality"}], ",", 
+      RowBox[{"isRequesting", "=", "False"}]}], "}"}], ",", 
+    RowBox[{"Panel", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Column", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Style", "[", 
+           RowBox[{
+           "\"\<Persona Chat Interface\>\"", ",", "\[IndentingNewLine]", 
+            "Bold", ",", "\[IndentingNewLine]", 
+            RowBox[{"FontSize", "->", "24"}], ",", "\[IndentingNewLine]", 
+            RowBox[{"FontFamily", "->", "\"\<Helvetica\>\""}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"TextAlignment", "->", "Center"}]}], "]"}], ",", 
+          RowBox[{"Spacer", "[", "15", "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Grid", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Style", "[", 
+                 RowBox[{"\"\<Select a personality:\>\"", ",", "Bold"}], 
+                 "]"}], ",", 
+                RowBox[{"PopupMenu", "[", 
+                 RowBox[{
+                  RowBox[{"Dynamic", "[", 
+                   RowBox[{"currentPersonality", ",", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"currentPersonality", "=", "#"}], ";", 
+                    RowBox[{"selectedPersonality", "=", "#"}], ";", 
+                    RowBox[{"localChatHistory", "=", 
+                    RowBox[{"{", "}"}]}]}], ")"}], "&"}]}], "]"}], ",", 
+                  "randomPersonalities", ",", 
+                  RowBox[{"BaseStyle", "->", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"FontFamily", "->", "\"\<Helvetica\>\""}], ",", 
+                    RowBox[{"FontSize", "->", "14"}]}], "}"}]}]}], "]"}]}], 
+               "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Style", "[", 
+                 RowBox[{"\"\<Enter max tokens:\>\"", ",", "Bold"}], "]"}], 
+                ",", 
+                RowBox[{"InputField", "[", 
+                 RowBox[{
+                  RowBox[{"Dynamic", "[", "maxTokens", "]"}], ",", "Number", 
+                  ",", 
+                  RowBox[{"ImageSize", "->", "100"}]}], "]"}]}], "}"}]}], 
+             "}"}], ",", 
+            RowBox[{"Alignment", "->", "Left"}], ",", 
+            RowBox[{"Spacings", "->", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "1"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"1", ",", "1"}], "}"}]}], "}"}]}]}], "]"}], ",", 
+          RowBox[{"Spacer", "[", "10", "]"}], ",", 
+          RowBox[{"Panel", "[", 
+           RowBox[{
+            RowBox[{"Column", "[", "\[IndentingNewLine]", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Dynamic", "@", 
+                RowBox[{"Grid", "[", 
+                 RowBox[{
+                  RowBox[{"Partition", "[", 
+                   RowBox[{
+                    RowBox[{"Flatten", "@", 
+                    RowBox[{"Map", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", "Bold", ",", 
+                    RowBox[{"FontSize", "->", "12"}]}], "]"}], ",", 
+                    RowBox[{"Panel", "[", 
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], ",", 
+                    RowBox[{"chatBubbleStyle", "[", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "]"}]}], "]"}]}], "}"}], 
+                    "&"}], ",", "localChatHistory"}], "]"}]}], ",", "2"}], 
+                   "]"}], ",", 
+                  RowBox[{"Alignment", "->", 
+                   RowBox[{"{", 
+                    RowBox[{"Left", ",", "Center"}], "}"}]}], ",", 
+                  RowBox[{"Spacings", "->", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", "1"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"0.5", ",", "0.5"}], "}"}]}], "}"}]}]}], "]"}]}], 
+               ",", 
+               RowBox[{"Dynamic", "[", 
+                RowBox[{"If", "[", 
+                 RowBox[{"isRequesting", ",", 
+                  RowBox[{"ProgressIndicator", "[", 
+                   RowBox[{"Appearance", "->", "\"\<Percolate\>\""}], "]"}], 
+                  ",", "\"\<\>\""}], "]"}], "]"}]}], "}"}], "]"}], ",", 
+            RowBox[{"ImageSize", "->", 
+             RowBox[{"{", 
+              RowBox[{"500", ",", "500"}], "}"}]}]}], "]"}], ",", 
+          RowBox[{"Spacer", "[", "15", "]"}], ",", 
+          RowBox[{"Grid", "[", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"{", "\[IndentingNewLine]", 
+             RowBox[{"{", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"InputField", "[", 
+                RowBox[{
+                 RowBox[{"Dynamic", "[", "userPrompt", "]"}], ",", 
+                 "\[IndentingNewLine]", "String", ",", "\[IndentingNewLine]", 
+                 
+                 RowBox[{"ImageSize", "->", "500"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"ContinuousAction", "->", "False"}]}], "]"}], ",", 
+               "\[IndentingNewLine]", 
+               RowBox[{"Button", "[", "\[IndentingNewLine]", 
+                RowBox[{"\"\<Send\>\"", ",", "\[IndentingNewLine]", 
+                 RowBox[{"Module", "[", "\[IndentingNewLine]", 
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{
+                    "personalityIndex", ",", "featureDirections", ",", 
+                    "result", ",", "apiResponse"}], "}"}], ",", 
+                   "\[IndentingNewLine]", 
+                   RowBox[{
+                    RowBox[{"isRequesting", "=", "True"}], ";", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"personalityIndex", "=", 
+                    RowBox[{"First", "@", 
+                    RowBox[{"First", "@", 
+                    RowBox[{"Position", "[", 
+                    RowBox[{"personalityNames", ",", "currentPersonality"}], 
+                    "]"}]}]}]}], ";", "\[IndentingNewLine]", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"featureDirections", "=", 
+                    RowBox[{
+                    RowBox[{"allPersMeanOfDiff", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"All", ",", "18"}], "]"}], "]"}], "[", 
+                    RowBox[{"[", 
+                    RowBox[{"personalityIndex", ",", "All"}], "]"}], "]"}]}], 
+                    ";", "\[IndentingNewLine]", 
+                    RowBox[{"localChatHistory", "=", 
+                    RowBox[{"Append", "[", 
+                    RowBox[{"localChatHistory", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<User\>\"", ",", "userPrompt"}], "}"}]}], 
+                    "]"}]}], ";", "\[IndentingNewLine]", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"result", "=", 
+                    RowBox[{"debug", "=", 
+                    RowBox[{
+                    "modifiedLLMSynthesize", "[", "\[IndentingNewLine]", 
+                    RowBox[{"<|", 
+                    RowBox[{
+                    RowBox[{"\"\<prompt\>\"", "->", "userPrompt"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{
+                    "\"\<featureDirections\>\"", "->", "featureDirections"}], 
+                    ",", "\[IndentingNewLine]", 
+                    RowBox[{"\"\<modifier\>\"", "->", "1.55"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"\"\<maxTokens\>\"", "->", "maxTokens"}]}], 
+                    "|>"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"apiResponse", "=", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"result", "===", "$Failed"}], ",", 
+                    "\"\<API request failed\>\"", ",", "result"}], "]"}]}], 
+                    ";", "\[IndentingNewLine]", 
+                    RowBox[{"localChatHistory", "=", 
+                    RowBox[{"Append", "[", 
+                    RowBox[{"localChatHistory", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<Assistant\>\"", ",", "result"}], "}"}]}], 
+                    "]"}]}], ";", "\[IndentingNewLine]", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"userPrompt", "=", "\"\<\>\""}], ";", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"isRequesting", "=", "False"}], ";"}]}], "]"}], 
+                 ",", "\[IndentingNewLine]", 
+                 RowBox[{"BaseStyle", "->", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"FontFamily", "->", "\"\<Helvetica\>\""}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"FontSize", "->", "14"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"FontWeight", "->", "Bold"}]}], "}"}]}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"Background", "->", 
+                  RowBox[{"RGBColor", "[", 
+                   RowBox[{"0.2", ",", "0.6", ",", "1"}], "]"}]}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"BaseStyle", "->", "White"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"ImageSize", "->", 
+                  RowBox[{"{", 
+                   RowBox[{"70", ",", "35"}], "}"}]}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"Method", "->", "\"\<Queued\>\""}]}], "]"}]}], "}"}],
+              "}"}], ",", "\[IndentingNewLine]", 
+            RowBox[{"Alignment", "->", 
+             RowBox[{"{", 
+              RowBox[{"Left", ",", "Center"}], "}"}]}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"Spacings", "->", "1"}]}], "]"}]}], "}"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Alignment", "->", "Center"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Spacings", "->", "1"}]}], "]"}], ",", "\[IndentingNewLine]", 
+      
+      RowBox[{"Background", "->", 
+       RowBox[{"GrayLevel", "[", "0.98", "]"}]}], ",", "\[IndentingNewLine]", 
+      
+      RowBox[{"ImageSize", "->", 
+       RowBox[{"{", 
+        RowBox[{"600", ",", "700"}], "}"}]}], ",", "\[IndentingNewLine]", 
+      RowBox[{"BaseStyle", "->", 
+       RowBox[{"{", 
+        RowBox[{"FontFamily", "->", "\"\<Helvetica\>\""}], "}"}]}]}], "]"}]}],
+    "]"}], "\"\<\>\""}], "\n"}], "Input",
+ CellChangeTimes->{{3.9295291907428007`*^9, 3.929529345632495*^9}, 
+   3.9295294335227*^9, {3.929529502567174*^9, 3.9295295028063617`*^9}, {
+   3.929529716879911*^9, 3.929529717956128*^9}, 3.92952978684685*^9, {
+   3.929533337576508*^9, 3.929533343440668*^9}, {3.92954166174051*^9, 
+   3.929541661827709*^9}, {3.92954171734586*^9, 3.929541717588654*^9}, {
+   3.929541760741642*^9, 3.929541760983686*^9}, {3.929542351932289*^9, 
+   3.929542354349297*^9}, {3.9296489523828773`*^9, 3.929648952898441*^9}, 
+   3.929649047159924*^9, {3.929649144059023*^9, 3.929649144720265*^9}},
+ CellLabel->
+  "In[134]:=",ExpressionUUID->"c61cab4c-7315-454f-9b2c-99640942d2db"],
+
+Cell[BoxData[
+ RowBox[{"\<\"\"\>", " ", 
+  DynamicModuleBox[{$CellContext`response$$ = 
+   "", $CellContext`currentPersonality$$ = 
+   "fanatical", $CellContext`isRequesting$$ = False}, 
+   PanelBox[
+    TagBox[GridBox[{
+       {
+        StyleBox["\<\"Persona Chat Interface\"\>",
+         StripOnInput->False,
+         TextAlignment->Center,
+         FontFamily->"Helvetica",
+         FontSize->24,
+         FontWeight->Bold]},
+       {
+        TemplateBox[{15},
+         "Spacer1"]},
+       {
+        TagBox[GridBox[{
+           {
+            StyleBox["\<\"Select a personality:\"\>",
+             StripOnInput->False,
+             FontWeight->Bold], 
+            
+            PopupMenuBox[
+             Dynamic[$CellContext`currentPersonality$$, \
+($CellContext`currentPersonality$$ = #; $CellContext`selectedPersonality = #; \
+$CellContext`localChatHistory = {})& ], {"fanatical"->"\<\"fanatical\"\>", 
+             "anxious"->"\<\"anxious\"\>", "shy"->"\<\"shy\"\>", 
+             "tenacious"->"\<\"tenacious\"\>", 
+             "emotional thinker"->"\<\"emotional thinker\"\>", 
+             "submissive"->"\<\"submissive\"\>", 
+             "practical thinker"->"\<\"practical thinker\"\>", 
+             "resilient"->"\<\"resilient\"\>", "lustful"->"\<\"lustful\"\>", 
+             "artistic"->"\<\"artistic\"\>"},
+             BaseStyle->{FontFamily -> "Helvetica", FontSize -> 14}]},
+           {
+            StyleBox["\<\"Enter max tokens:\"\>",
+             StripOnInput->False,
+             FontWeight->Bold], 
+            InputFieldBox[Dynamic[$CellContext`maxTokens], Number,
+             ImageSize->100]}
+          },
+          AutoDelete->False,
+          GridBoxAlignment->{"Columns" -> {{Left}}},
+          
+          GridBoxItemSize->{
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+          GridBoxSpacings->{"Columns" -> {0, 1}, "Rows" -> {1, 1}}],
+         "Grid"]},
+       {
+        TemplateBox[{10},
+         "Spacer1"]},
+       {
+        PanelBox[
+         TagBox[GridBox[{
+            {
+             DynamicBox[ToBoxes[
+               Grid[
+                Partition[
+                 Flatten[
+                  Map[{
+                    Style[
+                    Part[#, 1], Bold, FontSize -> 12], 
+                    Panel[
+                    Part[#, 2], 
+                    $CellContext`chatBubbleStyle[
+                    Part[#, 1]]]}& , $CellContext`localChatHistory]], 2], 
+                Alignment -> {Left, Center}, 
+                Spacings -> {{0, 1}, {0.5, 0.5}}], StandardForm],
+              ImageSizeCache->{4., {2.172119140625, 7.827880859375}}]},
+            {
+             DynamicBox[ToBoxes[
+               If[$CellContext`isRequesting$$, 
+                ProgressIndicator[Appearance -> "Percolate"], ""], 
+               StandardForm],
+              ImageSizeCache->{0., {0., 5.263671875}}]}
+           },
+           DefaultBaseStyle->"Column",
+           GridBoxAlignment->{"Columns" -> {{Left}}},
+           
+           GridBoxItemSize->{
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+          "Column"],
+         ImageSize->{500, 500}]},
+       {
+        TemplateBox[{15},
+         "Spacer1"]},
+       {
+        TagBox[GridBox[{
+           {
+            InputFieldBox[Dynamic[$CellContext`userPrompt], String,
+             ContinuousAction->False,
+             ImageSize->500], 
+            ButtonBox["\<\"Send\"\>",
+             Appearance->Automatic,
+             Background->RGBColor[0.2, 0.6, 1],
+             
+             BaseStyle->{
+              FontFamily -> "Helvetica", FontSize -> 14, FontWeight -> Bold},
+             
+             ButtonFunction:>
+              Module[{$CellContext`personalityIndex$, \
+$CellContext`featureDirections$, $CellContext`result$, \
+$CellContext`apiResponse$}, $CellContext`isRequesting$$ = 
+                True; $CellContext`personalityIndex$ = First[
+                  First[
+                   
+                   Position[$CellContext`personalityNames, \
+$CellContext`currentPersonality$$]]]; $CellContext`featureDirections$ = Part[
+                  
+                  Part[$CellContext`allPersMeanOfDiff, All, 
+                   18], $CellContext`personalityIndex$, 
+                  All]; $CellContext`localChatHistory = 
+                Append[$CellContext`localChatHistory, {
+                  "User", $CellContext`userPrompt}]; $CellContext`result$ = \
+($CellContext`debug = $CellContext`modifiedLLMSynthesize[<|
+                   "prompt" -> $CellContext`userPrompt, 
+                    "featureDirections" -> $CellContext`featureDirections$, 
+                    "modifier" -> 1.55, 
+                    "maxTokens" -> $CellContext`maxTokens|>]); \
+$CellContext`apiResponse$ = 
+                If[$CellContext`result$ === $Failed, 
+                  "API request failed", $CellContext`result$]; \
+$CellContext`localChatHistory = 
+                Append[$CellContext`localChatHistory, {
+                  "Assistant", $CellContext`result$}]; \
+$CellContext`userPrompt = ""; $CellContext`isRequesting$$ = False; Null],
+             Evaluator->Automatic,
+             ImageSize->{70, 35},
+             Method->"Queued"]}
+          },
+          AutoDelete->False,
+          GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Center}}},
+          
+          GridBoxItemSize->{
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+          GridBoxSpacings->{"Columns" -> {{1}}}],
+         "Grid"]}
+      },
+      DefaultBaseStyle->"Column",
+      GridBoxAlignment->{"Columns" -> {{Center}}},
+      GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+      GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{1}}}],
+     "Column"],
+    Background->GrayLevel[0.98],
+    BaseStyle->{FontFamily -> "Helvetica"},
+    ImageSize->{600, 700}],
+   DynamicModuleValues:>{}]}]], "Output",
+ CellChangeTimes->{
+  3.929648043682041*^9, {3.929648447263332*^9, 3.929648453667099*^9}, 
+   3.929648514407434*^9, 3.929648586481861*^9, 3.9296486486720657`*^9, 
+   3.929648751702642*^9, 3.929648828020486*^9, 3.929648887486883*^9, {
+   3.929648938054586*^9, 3.929648953182694*^9}, 3.929648999288445*^9, {
+   3.929649047253705*^9, 3.929649050054173*^9}, 3.9296491013328543`*^9, 
+   3.929649145800686*^9, 3.929649178734941*^9, 3.932303261612315*^9},
+ CellLabel->
+  "Out[141]=",ExpressionUUID->"f5351549-2fa3-49d7-87c3-f5c1b466c9a1"]
+}, Open  ]]
+},
+WindowSize->{1583, 1128},
+WindowMargins->{{0, Automatic}, {Automatic, -212}},
+FrontEndVersion->"14.0 for Mac OS X ARM (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"9e5fd7ff-4cb4-4f29-b0a8-28aa688eaf7c"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 13938, 308, 1459, "Input",ExpressionUUID->"c61cab4c-7315-454f-9b2c-99640942d2db"],
+Cell[14521, 332, 6403, 157, 719, "Output",ExpressionUUID->"f5351549-2fa3-49d7-87c3-f5c1b466c9a1"]
+}, Open  ]]
+}
+]
+*)
+

@@ -1,0 +1,202 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6896,        194]
+NotebookOptionsPosition[      6264,        177]
+NotebookOutlinePosition[      6660,        193]
+CellTagsIndexPosition[      6617,        190]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"lossFunction", "[", "x_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Table", "[", 
+     RowBox[{"1", ",", "179"}], "]"}], ".", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"standardized", ".", 
+             RowBox[{"Transpose", "[", 
+              RowBox[{"standardized", "*", "x"}], "]"}], ".", 
+             RowBox[{"(", 
+              RowBox[{"standardized", "*", "x"}], ")"}]}], "/", 
+            RowBox[{"(", 
+             RowBox[{"57917.4", "*", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"x", ".", 
+                 RowBox[{"Table", "[", 
+                  RowBox[{"1", ",", "179"}], "]"}]}], ")"}], "/", "179."}]}], 
+             ")"}]}], ")"}], "-", "standardized"}], ")"}], "^", "2"}], ")"}], 
+      ".", 
+      RowBox[{"Table", "[", 
+       RowBox[{"1", ",", "4096"}], "]"}]}], ")"}]}]}], 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.929371823293433*^9, 3.92937182712432*^9}, {
+   3.929374475143783*^9, 3.929374497657346*^9}, 
+   3.92946954104226*^9},ExpressionUUID->"1747b4e2-7344-4a04-b0be-\
+5bd6a3d7a259"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"data", "=", 
+   RowBox[{"allPersMeanOfDiff", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", " ", "18"}], "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"p", "=", 
+   RowBox[{"data", ".", 
+    RowBox[{"Inverse", "[", 
+     RowBox[{
+      RowBox[{"Transpose", "[", "data", "]"}], ".", "data"}], "]"}], ".", 
+    RowBox[{"Transpose", "[", "data", "]"}]}]}], ";"}]}], "Input",ExpressionUU\
+ID->"3ea2b742-2fd6-4fb4-9c5f-2960cfcb0cd4"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"beamSearchOptimization", "[", 
+    RowBox[{
+    "initialGuess_", ",", "beamWidth_", ",", "maxIterations_", ",", 
+     "stepSize_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"beam", ",", "candidates", ",", "scores", ",", "bestSolution"}],
+       "}"}], ",", 
+     RowBox[{
+      RowBox[{"beam", "=", 
+       RowBox[{"{", "initialGuess", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Do", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"candidates", "=", 
+          RowBox[{"Flatten", "[", 
+           RowBox[{
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"beam", "[", 
+                RowBox[{"[", "i", "]"}], "]"}], "+", 
+               RowBox[{"RandomReal", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "stepSize"}], ",", "stepSize"}], "}"}], ",", 
+                 RowBox[{"Length", "[", "initialGuess", "]"}]}], "]"}]}], ",", 
+              RowBox[{"{", 
+               RowBox[{"i", ",", 
+                RowBox[{"Length", "[", "beam", "]"}]}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"j", ",", "beamWidth"}], "}"}]}], "]"}], ",", "1"}], 
+           "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"scores", "=", 
+          RowBox[{"lossFunction", "/@", "candidates"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"beam", "=", 
+          RowBox[{"Part", "[", 
+           RowBox[{"candidates", ",", 
+            RowBox[{"Ordering", "[", 
+             RowBox[{"scores", ",", "beamWidth"}], "]"}]}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"bestSolution", "=", 
+          RowBox[{"First", "[", "beam", "]"}]}], ";", "\[IndentingNewLine]", 
+         "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Mod", "[", 
+             RowBox[{"iter", ",", "10"}], "]"}], "==", "0"}], ",", 
+           RowBox[{"Print", "[", 
+            RowBox[{
+            "\"\<Iteration: \>\"", ",", "iter", ",", "\"\<, Best Loss: \>\"", 
+             ",", 
+             RowBox[{"lossFunction", "[", "bestSolution", "]"}]}], "]"}]}], 
+          "]"}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Max", "[", 
+             RowBox[{"Abs", "[", 
+              RowBox[{"Differences", "[", "beam", "]"}], "]"}], "]"}], "<", 
+            RowBox[{
+             RowBox[{"1", "e"}], "-", "6"}]}], ",", 
+           RowBox[{"Break", "[", "]"}]}], "]"}], ";"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"iter", ",", "maxIterations"}], "}"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", "bestSolution"}]}], "]"}]}], 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.929371823293433*^9, 3.92937182712432*^9}, {
+   3.929374475143783*^9, 3.929374497657346*^9}, 
+   3.92946954104226*^9},ExpressionUUID->"620633c9-1ff3-419a-b265-\
+b362c79b18ef"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"initialGuess", "=", 
+   RowBox[{"RandomReal", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", "179"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"beamSearchResult", "=", 
+    RowBox[{"beamSearchOptimization", "[", 
+     RowBox[{"initialGuess", ",", "10", ",", "10", ",", "0.1"}], "]"}]}], 
+   ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<Final solution: \>\"", ",", "result"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<Final loss: \>\"", ",", 
+    RowBox[{"lossFunction", "[", "result", "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.929371823293433*^9, 3.92937182712432*^9}, {
+  3.929374499854319*^9, 3.92937451753382*^9}},
+ CellLabel->"In[29]:=",ExpressionUUID->"4a5e3caf-0e91-47be-aaf2-482a555283b2"]
+},
+WindowSize->{808, 747},
+WindowMargins->{{0, Automatic}, {Automatic, 17}},
+FrontEndVersion->"14.0 for Mac OS X x86 (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"6caa1e98-c73f-4465-b620-0509b34ff4ad"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 1239, 35, 115, "Input",ExpressionUUID->"1747b4e2-7344-4a04-b0be-5bd6a3d7a259"],
+Cell[1800, 57, 470, 13, 52, "Input",ExpressionUUID->"3ea2b742-2fd6-4fb4-9c5f-2960cfcb0cd4"],
+Cell[2273, 72, 3088, 77, 346, "Input",ExpressionUUID->"620633c9-1ff3-419a-b265-b362c79b18ef"],
+Cell[5364, 151, 896, 24, 115, "Input",ExpressionUUID->"4a5e3caf-0e91-47be-aaf2-482a555283b2"]
+}
+]
+*)
+

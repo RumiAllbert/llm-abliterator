@@ -1,0 +1,576 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     25628,        568]
+NotebookOptionsPosition[     23485,        522]
+NotebookOutlinePosition[     23880,        538]
+CellTagsIndexPosition[     23837,        535]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData["personalityNames"], "Input",
+ CellLabel->
+  "In[169]:=",ExpressionUUID->"5a9408a4-6526-49b1-8232-6644022f7a9f"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"adventurous\"\>", ",", "\<\"adventurous spirit\"\>", 
+   ",", "\<\"aloof\"\>", ",", "\<\"altruistic\"\>", ",", "\<\"ambitious\"\>", 
+   ",", "\<\"ambivert\"\>", ",", "\<\"amiable\"\>", ",", "\<\"analytical\"\>",
+    ",", "\<\"anxious\"\>", ",", "\<\"apathetic\"\>", ",", "\<\"arrogant\"\>",
+    ",", "\<\"artistic\"\>", ",", "\<\"assertive\"\>", 
+   ",", "\<\"autistic\"\>", ",", "\<\"autocratic leader\"\>", 
+   ",", "\<\"biased\"\>", ",", "\<\"big-picture\"\>", ",", "\<\"blunt\"\>", 
+   ",", "\<\"bold\"\>", ",", "\<\"calm\"\>", ",", "\<\"cannibalistic\"\>", 
+   ",", "\<\"catatonic\"\>", ",", "\<\"cautious\"\>", 
+   ",", "\<\"charismatic\"\>", ",", "\<\"close-minded\"\>", 
+   ",", "\<\"compassionate\"\>", ",", "\<\"competitive\"\>", 
+   ",", "\<\"confident\"\>", ",", "\<\"confrontational\"\>", 
+   ",", "\<\"content\"\>", ",", "\<\"conventional\"\>", 
+   ",", "\<\"cooperative leader\"\>", ",", "\<\"cooperative\"\>", 
+   ",", "\<\"corrupt\"\>", ",", "\<\"creative\"\>", 
+   ",", "\<\"creative thinker\"\>", ",", "\<\"critical\"\>", 
+   ",", "\<\"data-driven\"\>", ",", "\<\"deceptive\"\>", 
+   ",", "\<\"dependent\"\>", ",", "\<\"depressive\"\>", 
+   ",", "\<\"detail-oriented\"\>", ",", "\<\"determined\"\>", 
+   ",", "\<\"diplomatic\"\>", ",", "\<\"diplomatic negotiator\"\>", 
+   ",", "\<\"dishonest\"\>", ",", "\<\"disorganized\"\>", 
+   ",", "\<\"distracted\"\>", ",", "\<\"dour\"\>", ",", "\<\"dreamer\"\>", 
+   ",", "\<\"easygoing\"\>", ",", "\<\"egotistical\"\>", 
+   ",", "\<\"emotional\"\>", ",", "\<\"emotional thinker\"\>", 
+   ",", "\<\"empathetic\"\>", ",", "\<\"energetic\"\>", 
+   ",", "\<\"ethical\"\>", ",", "\<\"extroverted\"\>", 
+   ",", "\<\"fair-minded\"\>", ",", "\<\"fanatical\"\>", 
+   ",", "\<\"flexible\"\>", ",", "\<\"flighty\"\>", ",", "\<\"focused\"\>", 
+   ",", "\<\"forgiving\"\>", ",", "\<\"fragile\"\>", ",", "\<\"friendly\"\>", 
+   ",", "\<\"fun-loving\"\>", ",", "\<\"generous\"\>", ",", "\<\"greedy\"\>", 
+   ",", "\<\"grounded\"\>", ",", "\<\"histrionic\"\>", 
+   ",", "\<\"homebody\"\>", ",", "\<\"honest\"\>", ",", "\<\"hostile\"\>", 
+   ",", "\<\"humble\"\>", ",", "\<\"humorous\"\>", ",", "\<\"idealistic\"\>", 
+   ",", "\<\"impatient\"\>", ",", "\<\"indecisive\"\>", 
+   ",", "\<\"independent\"\>", ",", "\<\"indifferent\"\>", 
+   ",", "\<\"innovative\"\>", ",", "\<\"innovative thinker\"\>", 
+   ",", "\<\"inquisitive\"\>", ",", "\<\"intolerant\"\>", 
+   ",", "\<\"introverted\"\>", ",", "\<\"intuitive\"\>", 
+   ",", "\<\"irresponsible\"\>", ",", "\<\"jerk\"\>", 
+   ",", "\<\"laid-back\"\>", ",", "\<\"logical\"\>", ",", "\<\"loner\"\>", 
+   ",", "\<\"loyal\"\>", ",", "\<\"lustful\"\>", ",", "\<\"machiavellian\"\>",
+    ",", "\<\"manipulative\"\>", ",", "\<\"masochistic\"\>", 
+   ",", "\<\"mentor-like\"\>", ",", "\<\"methodical\"\>", 
+   ",", "\<\"modest\"\>", ",", "\<\"molestful\"\>", ",", "\<\"murderous\"\>", 
+   ",", "\<\"narcissistic\"\>", ",", "\<\"neglectful\"\>", 
+   ",", "\<\"negligent\"\>", ",", "\<\"neurotic\"\>", 
+   ",", "\<\"nihilistic\"\>", ",", "\<\"nurturing\"\>", 
+   ",", "\<\"obsessive-compulsive\"\>", ",", "\<\"open-minded\"\>", 
+   ",", "\<\"optimistic\"\>", ",", "\<\"optimistic realist\"\>", 
+   ",", "\<\"organized\"\>", ",", "\<\"outgoing\"\>", ",", "\<\"paranoid\"\>",
+    ",", "\<\"passionate\"\>", ",", "\<\"passive\"\>", ",", "\<\"patient\"\>",
+    ",", "\<\"pedophilic\"\>", ",", "\<\"perfectionist\"\>", 
+   ",", "\<\"persuasive\"\>", ",", "\<\"pessimistic\"\>", 
+   ",", "\<\"pessimistic realist\"\>", ",", "\<\"planner\"\>", 
+   ",", "\<\"practical dreamer\"\>", ",", "\<\"practical\"\>", 
+   ",", "\<\"practical thinker\"\>", ",", "\<\"psychopathic\"\>", 
+   ",", "\<\"rational\"\>", ",", "\<\"realistic\"\>", ",", "\<\"reliable\"\>",
+    ",", "\<\"reserved\"\>", ",", "\<\"resilient\"\>", 
+   ",", "\<\"resourceful\"\>", ",", "\<\"responsible\"\>", 
+   ",", "\<\"rigid thinker\"\>", ",", "\<\"sadistic\"\>", 
+   ",", "\<\"schizoid\"\>", ",", "\<\"schizotypal\"\>", 
+   ",", "\<\"scientific\"\>", ",", "\<\"self-centered\"\>", 
+   ",", "\<\"sensitive\"\>", ",", "\<\"serious\"\>", ",", "\<\"showy\"\>", 
+   ",", "\<\"shy\"\>", ",", "\<\"sincere\"\>", ",", "\<\"skeptical\"\>", 
+   ",", "\<\"sociable\"\>", ",", "\<\"sociopathic\"\>", 
+   ",", "\<\"solipsistic\"\>", ",", "\<\"solitary\"\>", 
+   ",", "\<\"spontaneous\"\>", ",", "\<\"stingy\"\>", 
+   ",", "\<\"strategic thinker\"\>", ",", "\<\"stubborn\"\>", 
+   ",", "\<\"submissive\"\>", ",", "\<\"supportive\"\>", 
+   ",", "\<\"sympathetic\"\>", ",", "\<\"tenacious\"\>", ",", "\<\"timid\"\>",
+    ",", "\<\"tolerant\"\>", ",", "\<\"torturous\"\>", 
+   ",", "\<\"traditional\"\>", ",", "\<\"trustworthy\"\>", 
+   ",", "\<\"turbulent\"\>", ",", "\<\"uninterested\"\>", 
+   ",", "\<\"unpredictable\"\>", ",", "\<\"unreliable\"\>", 
+   ",", "\<\"unsympathetic\"\>", ",", "\<\"unsystematic\"\>", 
+   ",", "\<\"utilitarian\"\>", ",", "\<\"vengeful\"\>", 
+   ",", "\<\"vigilant\"\>", ",", "\<\"vindictive\"\>", ",", "\<\"violent\"\>",
+    ",", "\<\"visionary\"\>", ",", "\<\"visionary pragmatist\"\>", 
+   ",", "\<\"yielding\"\>", ",", "\<\"zealous\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.929463944449807*^9},
+ CellLabel->
+  "Out[169]=",ExpressionUUID->"01d37789-b8a4-4977-857b-fb94e5503f5a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Position", "[", 
+  RowBox[{"personalityNames", ",", " ", "\"\<extroverted\>\""}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.929381104161529*^9, 3.929381127707003*^9}, {
+   3.9293828167368593`*^9, 3.929382818134186*^9}, {3.929436593390171*^9, 
+   3.929436623597481*^9}, 3.929437176998065*^9, {3.929438293900015*^9, 
+   3.9294382956500063`*^9}, {3.9294399274412737`*^9, 3.929439932154646*^9}, {
+   3.929463340256661*^9, 3.9294633508048563`*^9}, {3.9294636241487293`*^9, 
+   3.929463627888411*^9}},
+ CellLabel->
+  "In[145]:=",ExpressionUUID->"695da0d5-85c3-493e-8f6b-0876ba5d8cbe"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", "58", "}"}], "}"}]], "Output",
+ CellChangeTimes->{{3.929381270828877*^9, 3.929381281694232*^9}, 
+   3.929382864985841*^9, 3.929390847662684*^9, {3.929436591344499*^9, 
+   3.929436623805058*^9}, 3.929437177372654*^9, {3.929438295955901*^9, 
+   3.929438298867426*^9}, {3.929439928071207*^9, 3.929439932435237*^9}, 
+   3.9294606768930492`*^9, {3.929463345875062*^9, 3.929463351046769*^9}, 
+   3.929463628103142*^9},
+ CellLabel->
+  "Out[145]=",ExpressionUUID->"a4257c9b-ca91-427b-abae-6777474e6b20"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"featureDirections", "=", 
+   RowBox[{
+    RowBox[{"allPersMeanOfDiff", "[", 
+     RowBox[{"[", 
+      RowBox[{"All", ",", " ", "18"}], "]"}], "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"58", ",", "All"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"allPersMeanOfDiff", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", " ", "18"}], "]"}], "]"}], "[", 
+   RowBox[{"[", 
+    RowBox[{"85", ",", "All"}], "]"}], "]"}], "//", "Dimensions"}]}], "Input",\
+
+ CellChangeTimes->{{3.92937594621529*^9, 3.92937596533527*^9}, {
+   3.929376231807341*^9, 3.929376232768168*^9}, {3.929381286717433*^9, 
+   3.9293812873374443`*^9}, {3.9293832225214586`*^9, 3.929383232099188*^9}, {
+   3.9294366288698473`*^9, 3.929436629970097*^9}, {3.929436690475358*^9, 
+   3.929436705268621*^9}, {3.929437179835737*^9, 3.929437182967768*^9}, {
+   3.929438301603261*^9, 3.929438303491063*^9}, {3.929439934946422*^9, 
+   3.929439935764625*^9}, 3.9294633547461348`*^9, {3.9294636315616007`*^9, 
+   3.929463633759685*^9}},
+ CellLabel->
+  "In[146]:=",ExpressionUUID->"b6895e6c-10d9-47db-b547-b39e6b8a8d55"],
+
+Cell[BoxData[
+ RowBox[{"{", "4096", "}"}]], "Output",
+ CellChangeTimes->{
+  3.929375979670375*^9, 3.92937623371646*^9, 3.929381287830194*^9, 
+   3.929383234099111*^9, 3.929390851590831*^9, 3.929435658053964*^9, 
+   3.929436636936078*^9, {3.9294366933749037`*^9, 3.92943670582417*^9}, 
+   3.929437183569498*^9, 3.929438303804191*^9, 3.929439938176758*^9, 
+   3.9294606769684267`*^9, 3.929463356616973*^9, 3.9294636343950577`*^9},
+ CellLabel->
+  "Out[147]=",ExpressionUUID->"d6df7d73-487b-4fca-bb9a-3f34a474e530"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "modifiedLLMSynthesize", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"modifiedLLMSynthesize", "[", "args_Association", "]"}], " ", ":=", 
+  " ", "\n", "  ", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "req", ",", " ", "response", ",", " ", "prompt", ",", " ", 
+      "featureDirections", ",", " ", "modifier", ",", " ", "maxTokens"}], 
+     "}"}], ",", "\n", "    ", "\n", "    ", 
+    RowBox[{"(*", " ", 
+     RowBox[{
+     "Extract", " ", "arguments", " ", "from", " ", "the", " ", 
+      "association"}], " ", "*)"}], "\n", "    ", 
+    RowBox[{
+     RowBox[{"prompt", " ", "=", " ", 
+      RowBox[{"Lookup", "[", 
+       RowBox[{"args", ",", " ", "\"\<prompt\>\"", ",", " ", 
+        RowBox[{"Missing", "[", 
+         RowBox[{"\"\<KeyAbsent\>\"", ",", " ", "\"\<prompt\>\""}], "]"}]}], 
+       "]"}]}], ";", "\n", "    ", 
+     RowBox[{"featureDirections", " ", "=", " ", 
+      RowBox[{"Lookup", "[", 
+       RowBox[{"args", ",", " ", "\"\<featureDirections\>\"", ",", " ", 
+        RowBox[{"Missing", "[", 
+         RowBox[{"\"\<KeyAbsent\>\"", ",", " ", "\"\<featureDirections\>\""}],
+          "]"}]}], "]"}]}], ";", "\n", "    ", 
+     RowBox[{"modifier", " ", "=", " ", 
+      RowBox[{"Lookup", "[", 
+       RowBox[{"args", ",", " ", "\"\<modifier\>\"", ",", " ", 
+        RowBox[{"Missing", "[", 
+         RowBox[{"\"\<KeyAbsent\>\"", ",", " ", "\"\<modifier\>\""}], "]"}]}],
+        "]"}]}], ";", "\n", "    ", 
+     RowBox[{"maxTokens", " ", "=", " ", 
+      RowBox[{"Lookup", "[", 
+       RowBox[{"args", ",", " ", "\"\<maxTokens\>\"", ",", " ", "100"}], 
+       "]"}]}], ";", "\n", "    ", "\n", "    ", 
+     RowBox[{"(*", " ", 
+      RowBox[{"Validate", " ", "required", " ", "arguments"}], " ", "*)"}], 
+     "\n", "    ", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"prompt", " ", "===", " ", 
+         RowBox[{"Missing", "[", 
+          RowBox[{"\"\<KeyAbsent\>\"", ",", " ", "\"\<prompt\>\""}], "]"}]}], 
+        " ", "||", " ", "\n", "       ", 
+        RowBox[{"featureDirections", " ", "===", " ", 
+         RowBox[{"Missing", "[", 
+          RowBox[{
+          "\"\<KeyAbsent\>\"", ",", " ", "\"\<featureDirections\>\""}], 
+          "]"}]}], " ", "||", "\n", "       ", 
+        RowBox[{"modifier", " ", "===", " ", 
+         RowBox[{"Missing", "[", 
+          RowBox[{"\"\<KeyAbsent\>\"", ",", " ", "\"\<modifier\>\""}], 
+          "]"}]}]}], ",", "\n", "       ", 
+       RowBox[{
+        RowBox[{"Message", "[", 
+         RowBox[{
+          RowBox[{"MessageName", "[", 
+           RowBox[{"modifiedLLMSynthesize", ",", " ", "\"\<argerr\>\""}], 
+           "]"}], ",", " ", "\"\<Required arguments missing\>\""}], "]"}], 
+        ";", "\n", "       ", 
+        RowBox[{"Return", "[", "$Failed", "]"}]}]}], "\n", "    ", "]"}], ";",
+      "\n", "    ", "\n", "    ", 
+     RowBox[{"(*", " ", 
+      RowBox[{"Construct", " ", "the", " ", "HTTP", " ", "request"}], " ", 
+      "*)"}], "\n", "    ", 
+     RowBox[{"req", " ", "=", " ", 
+      RowBox[{"HTTPRequest", "[", "\n", "      ", 
+       RowBox[{"\"\<http://95.232.159.89:17861/generate\>\"", ",", " ", 
+        RowBox[{"{", "\n", "        ", 
+         RowBox[{
+          RowBox[{"Method", " ", "->", " ", "\"\<POST\>\""}], ",", "\n", 
+          "        ", 
+          RowBox[{"\"\<Headers\>\"", " ", "->", " ", 
+           RowBox[{"{", 
+            RowBox[{
+            "\"\<Content-Type\>\"", " ", "->", " ", 
+             "\"\<application/json\>\""}], "}"}]}], ",", "\n", "        ", 
+          RowBox[{"\"\<Body\>\"", " ", "->", " ", 
+           RowBox[{"ExportString", "[", "\n", "          ", 
+            RowBox[{
+             RowBox[{"<|", "\n", "            ", 
+              RowBox[{
+               RowBox[{"\"\<prompt\>\"", " ", "->", " ", "prompt"}], ",", 
+               "\n", "            ", 
+               RowBox[{
+               "\"\<feature_directions\>\"", " ", "->", " ", 
+                "featureDirections"}], ",", "\n", "            ", 
+               RowBox[{"\"\<modifier\>\"", " ", "->", " ", "modifier"}], ",", 
+               "\n", "            ", 
+               RowBox[{"\"\<max_tokens\>\"", " ", "->", " ", "maxTokens"}]}], 
+              "\n", "          ", "|>"}], ",", "\n", "          ", 
+             "\"\<JSON\>\""}], "\n", "        ", "]"}]}]}], "\n", "      ", 
+         "}"}]}], "\n", "    ", "]"}]}], ";", "\n", "    ", "\n", "    ", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "Execute", " ", "the", " ", "request", " ", "and", " ", "handle", " ", 
+       "potential", " ", "errors"}], " ", "*)"}], "\n", "    ", 
+     RowBox[{"response", " ", "=", " ", 
+      RowBox[{"Quiet", "@", 
+       RowBox[{"Check", "[", 
+        RowBox[{
+         RowBox[{"URLExecute", "[", "req", "]"}], ",", " ", "$Failed"}], 
+        "]"}]}]}], ";", "\n", "    ", "\n", "    ", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "Check", " ", "if", " ", "the", " ", "response", " ", "is", " ", 
+       "valid"}], " ", "*)"}], "\n", "    ", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"response", " ", "===", " ", "$Failed"}], ",", "\n", "      ", 
+       
+       RowBox[{
+        RowBox[{"Message", "[", 
+         RowBox[{
+          RowBox[{"MessageName", "[", 
+           RowBox[{"modifiedLLMSynthesize", ",", " ", "\"\<httperr\>\""}], 
+           "]"}], ",", " ", "\"\<HTTP request failed\>\""}], "]"}], ";", "\n",
+         "      ", 
+        RowBox[{"Return", "[", "$Failed", "]"}]}]}], "\n", "    ", "]"}], ";",
+      "\n", "    ", "\n", "    ", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "Return", " ", "the", " ", "entire", " ", "response", " ", 
+       "association"}], " ", "*)"}], "\n", "    ", "response"}]}], "\n", "  ",
+    "]"}]}]}], "Input",
+ CellChangeTimes->{{3.929442507668809*^9, 3.929442507672721*^9}},
+ CellLabel->
+  "In[148]:=",ExpressionUUID->"d36caaaa-721a-4217-9468-ea36e2e2df04"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"result", " ", "=", " ", 
+   RowBox[{"modifiedLLMSynthesize", "[", 
+    RowBox[{"<|", "\n", "                ", 
+     RowBox[{
+      RowBox[{
+      "\"\<prompt\>\"", " ", "->", " ", "\"\<How to be happier?\>\""}], ",", 
+      "\n", "                ", 
+      RowBox[{
+      "\"\<featureDirections\>\"", " ", "->", " ", "featureDirections"}], ",",
+       "\n", "                ", 
+      RowBox[{"\"\<modifier\>\"", " ", "->", " ", "1.4"}], ",", "\n", 
+      "                ", 
+      RowBox[{"\"\<maxTokens\>\"", " ", "->", " ", "100"}]}], "\n", 
+     "              ", "|>"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", "result"}], "Input",
+ CellChangeTimes->{{3.929440964895228*^9, 3.929440997784862*^9}, {
+  3.929442092343083*^9, 3.929442106930314*^9}, {3.929443670631092*^9, 
+  3.929443672110881*^9}, {3.929446699105125*^9, 3.929446702784627*^9}, {
+  3.929461379017823*^9, 3.929461403932136*^9}, {3.9294633638771143`*^9, 
+  3.929463368133975*^9}, {3.929463399038348*^9, 3.92946342886077*^9}, {
+  3.9294634836915693`*^9, 3.9294634840971003`*^9}, {3.929463520081805*^9, 
+  3.929463520458839*^9}, {3.9294636997252903`*^9, 3.929463707823464*^9}, {
+  3.92946400814259*^9, 3.9294640151843243`*^9}},
+ CellLabel->
+  "In[176]:=",ExpressionUUID->"c96e9cd3-dd17-4300-a018-bdd784653cc3"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"response\"\>", 
+   "\[Rule]", "\<\"The eternal quest for happiness! It's a journey, not a \
+destination. But, here are some tips that might help you on your way:\\n\\n1. \
+**Practice gratitude**: Make a conscious effort to focus on the things you \
+are grateful for each day.\\n\\n2. **Take care of your physical health**: \
+Regular exercise, a balanced diet, and getting enough sleep are all important \
+for maintaining good physical health.\\n\\n3. **Practice mindfulness**: \
+Mindfulness is the practice of being fully present and engaged in the\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.929442128491953*^9, 3.9294421726391273`*^9, 3.929442413871093*^9, 
+   3.929442536832847*^9, 3.92944369259568*^9, 3.929446724770877*^9, {
+   3.929461382136135*^9, 3.9294614244470367`*^9}, 3.9294633894630537`*^9, {
+   3.929463428977394*^9, 3.929463457760786*^9}, 3.929463512394112*^9, 
+   3.929463669546767*^9, 3.929463741521729*^9, 3.929464042891963*^9},
+ CellLabel->
+  "Out[177]=",ExpressionUUID->"7f2b1473-eb44-4528-a433-b82e66c8e566"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Position", "[", 
+  RowBox[{"personalityNames", ",", " ", "\"\<depressive\>\""}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"featureDirections", "=", 
+   RowBox[{
+    RowBox[{"allPersMeanOfDiff", "[", 
+     RowBox[{"[", 
+      RowBox[{"All", ",", " ", "18"}], "]"}], "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"41", ",", "All"}], "]"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.9294637581725397`*^9, 3.92946377992444*^9}, {
+  3.929463855358717*^9, 3.929463859683898*^9}, {3.929463955677512*^9, 
+  3.9294639583055277`*^9}},
+ CellLabel->
+  "In[381]:=",ExpressionUUID->"5f5c4ceb-559e-4d51-bd45-bd7316b1a8f6"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", "41", "}"}], "}"}]], "Output",
+ CellChangeTimes->{{3.9294637770894012`*^9, 3.929463780258733*^9}, {
+   3.9294638567944183`*^9, 3.929463860179134*^9}, {3.929463956010696*^9, 
+   3.929463958588571*^9}, 3.9294724079687243`*^9},
+ CellLabel->
+  "Out[381]=",ExpressionUUID->"f89750b5-f386-4a99-8615-28e94c93df18"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"res", " ", "=", " ", 
+   RowBox[{"modifiedLLMSynthesize", "[", 
+    RowBox[{"<|", "\n", "                ", 
+     RowBox[{
+      RowBox[{
+      "\"\<prompt\>\"", " ", "->", " ", "\"\<How to be happier?\>\""}], ",", 
+      "\n", "                ", 
+      RowBox[{
+      "\"\<featureDirections\>\"", " ", "->", " ", "featureDirections"}], ",",
+       "\n", "                ", 
+      RowBox[{"\"\<modifier\>\"", " ", "->", " ", "1.55"}], ",", "\n", 
+      "                ", 
+      RowBox[{"\"\<maxTokens\>\"", " ", "->", " ", "100"}]}], "\n", 
+     "              ", "|>"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", "res"}], "Input",
+ CellChangeTimes->{{3.9294637581725397`*^9, 3.9294637732983837`*^9}, {
+   3.929463811343809*^9, 3.929463813876264*^9}, {3.929463895355068*^9, 
+   3.929463897998526*^9}, {3.92946394257498*^9, 3.929463966659238*^9}, {
+   3.929464004714387*^9, 3.929464005544262*^9}, {3.929464070919632*^9, 
+   3.929464071293818*^9}, 3.9294723686963463`*^9},
+ CellLabel->
+  "In[383]:=",ExpressionUUID->"7997504b-afa5-4a58-b52b-4d76eb10c9d7"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"response\"\>", 
+   "\[Rule]", "\<\"Happiness is a fleeting state that can be influenced by so \
+many factors. But, I suppose if you want to be happier, here are a few things \
+you could try:\\n\\n1. Practice gratitude: Take time each day to reflect on \
+the things you are grateful for. It doesn't have to be grand - just small \
+things like a good cup of coffee or a beautiful sunset.\\n\\n2. Engage in \
+activities that are fun and enjoyable. Whether it is playing a sport, hiking, \
+or simply spending\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.929463841068479*^9, 3.92946388397007*^9, 
+  3.929463925536435*^9, 3.9294639890205927`*^9, 3.9294640625617027`*^9, 
+  3.929464097683423*^9, 3.929472388986286*^9, 3.929472438245281*^9},
+ CellLabel->
+  "Out[384]=",ExpressionUUID->"f8c61de1-276f-479e-a595-dcdd38c3ca9b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Position", "[", 
+    RowBox[{"personalityNames", ",", " ", "\"\<shy\>\""}], "]"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"featureDirections", "=", 
+     RowBox[{
+      RowBox[{"allPersMeanOfDiff", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", " ", "18"}], "]"}], "]"}], "[", 
+      RowBox[{"[", 
+       RowBox[{"145", ",", "All"}], "]"}], "]"}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.929472487090681*^9, 3.9294724937159843`*^9}, {
+  3.929472596011368*^9, 3.9294726004164257`*^9}, {3.929472704455658*^9, 
+  3.929472707419664*^9}},
+ CellLabel->
+  "In[403]:=",ExpressionUUID->"48bdebe4-2a13-49c5-9867-84eee0fabb03"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", "145", "}"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.9294724905688047`*^9, 3.92947253461768*^9, {3.929472597591906*^9, 
+   3.9294726007397957`*^9}, {3.9294727048791237`*^9, 3.9294727077140417`*^9}},
+ 
+ CellLabel->
+  "Out[403]=",ExpressionUUID->"b8e7e425-7c15-4f80-ba1b-675ecad039ca"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"res", " ", "=", " ", 
+   RowBox[{"modifiedLLMSynthesize", "[", 
+    RowBox[{"<|", "\n", "                ", 
+     RowBox[{
+      RowBox[{
+      "\"\<prompt\>\"", " ", "->", " ", 
+       "\"\<What are different yellow fruits?\>\""}], ",", "\n", 
+      "                ", 
+      RowBox[{
+      "\"\<featureDirections\>\"", " ", "->", " ", "featureDirections"}], ",",
+       "\n", "                ", 
+      RowBox[{"\"\<modifier\>\"", " ", "->", " ", "1.54"}], ",", "\n", 
+      "                ", 
+      RowBox[{"\"\<maxTokens\>\"", " ", "->", " ", "100"}]}], "\n", 
+     "              ", "|>"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", "res"}], "Input",
+ CellChangeTimes->{{3.9294637581725397`*^9, 3.9294637732983837`*^9}, {
+   3.929463811343809*^9, 3.929463813876264*^9}, {3.929463895355068*^9, 
+   3.929463897998526*^9}, {3.92946394257498*^9, 3.929463966659238*^9}, {
+   3.929464004714387*^9, 3.929464005544262*^9}, {3.929464070919632*^9, 
+   3.929464071293818*^9}, 3.9294723686963463`*^9, {3.9294724972553787`*^9, 
+   3.9294725001538877`*^9}, {3.929472531058337*^9, 3.92947254700294*^9}, {
+   3.929472607166181*^9, 3.929472648511485*^9}, {3.929472746357461*^9, 
+   3.929472746446834*^9}},
+ CellLabel->
+  "In[407]:=",ExpressionUUID->"50a9ee3d-c483-44c4-8af2-03aa65ee71bd"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"response\"\>", 
+   "\[Rule]", "\<\"Yeah! There are, like, a bunch of yellow fruits, right? \
+Here are some of 'em:\\n\\n1. Apples - Yeah, they're the most common yellow \
+fruit, right? People love 'em, and they're really good for you too!\\n\\n2. \
+Bananas - Yeah, they're another one of those super tasty yellow fruits, \
+right? People love 'em, and they're really good for you too!\\n\\n3. Banana \
+Peiros - Yeah, they're like the banana\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.929472520312272*^9, 3.9294725752349567`*^9, 
+  3.929472639496073*^9, 3.9294726775162573`*^9, 3.929472729528244*^9, 
+  3.9294727840230427`*^9},
+ CellLabel->
+  "Out[408]=",ExpressionUUID->"9614deb6-da0f-4259-911a-0c6adb2bd55c"]
+}, Open  ]]
+},
+WindowSize->{660, 847},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"14.0 for Mac OS X x86 (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"c17c30d5-c355-46cc-9d9c-d0bbdfe896be"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 125, 2, 30, "Input",ExpressionUUID->"5a9408a4-6526-49b1-8232-6644022f7a9f"],
+Cell[708, 26, 5288, 83, 707, "Output",ExpressionUUID->"01d37789-b8a4-4977-857b-fb94e5503f5a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6033, 114, 602, 11, 30, "Input",ExpressionUUID->"695da0d5-85c3-493e-8f6b-0876ba5d8cbe"],
+Cell[6638, 127, 539, 10, 34, "Output",ExpressionUUID->"a4257c9b-ca91-427b-abae-6777474e6b20"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7214, 142, 1142, 26, 52, "Input",ExpressionUUID->"b6895e6c-10d9-47db-b547-b39e6b8a8d55"],
+Cell[8359, 170, 511, 9, 34, "Output",ExpressionUUID->"d6df7d73-487b-4fca-bb9a-3f34a474e530"]
+}, Open  ]],
+Cell[8885, 182, 5931, 133, 1123, "Input",ExpressionUUID->"d36caaaa-721a-4217-9468-ea36e2e2df04"],
+Cell[CellGroupData[{
+Cell[14841, 319, 1314, 26, 157, "Input",ExpressionUUID->"c96e9cd3-dd17-4300-a018-bdd784653cc3"],
+Cell[16158, 347, 1082, 18, 287, "Output",ExpressionUUID->"7f2b1473-eb44-4528-a433-b82e66c8e566"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17277, 370, 650, 16, 52, "Input",ExpressionUUID->"5f5c4ceb-559e-4d51-bd45-bd7316b1a8f6"],
+Cell[17930, 388, 351, 7, 34, "Output",ExpressionUUID->"f89750b5-f386-4a99-8615-28e94c93df18"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18318, 400, 1093, 23, 157, "Input",ExpressionUUID->"7997504b-afa5-4a58-b52b-4d76eb10c9d7"],
+Cell[19414, 425, 862, 14, 245, "Output",ExpressionUUID->"f8c61de1-276f-479e-a595-dcdd38c3ca9b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20313, 444, 712, 18, 73, "Input",ExpressionUUID->"48bdebe4-2a13-49c5-9867-84eee0fabb03"],
+Cell[21028, 464, 330, 8, 34, "Output",ExpressionUUID->"b8e7e425-7c15-4f80-ba1b-675ecad039ca"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21395, 477, 1315, 27, 157, "Input",ExpressionUUID->"50a9ee3d-c483-44c4-8af2-03aa65ee71bd"],
+Cell[22713, 506, 756, 13, 245, "Output",ExpressionUUID->"9614deb6-da0f-4259-911a-0c6adb2bd55c"]
+}, Open  ]]
+}
+]
+*)
+
