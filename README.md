@@ -356,3 +356,16 @@ curl -X POST "http://0.0.0.0:8888/generate" -H "Content-Type: application/json" 
 ```
 
 This will return a JSON response with the generated text.
+
+
+```bibtex
+@misc{allbert2025identifyingmanipulatingpersonalitytraits,
+      title={Identifying and Manipulating Personality Traits in LLMs Through Activation Engineering}, 
+      author={Rumi A. Allbert and James K. Wiles and Vlad Grankovsky},
+      year={2025},
+      eprint={2412.10427},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2412.10427}, 
+}
+```
